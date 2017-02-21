@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>LoginApp</title>
+	<title>MedicalClinic</title>
     <link rel="stylesheet" href="/css/bootstrap.css"/>
      <link rel="stylesheet" href="/css/style.css"/>
 </head>
@@ -22,6 +22,7 @@
             <div class="form-group">
           {{#if user}}
             <label style="color:white"> <font size="4"> Hi {{user.name}} &nbsp;&nbsp;</font></label>
+            <a href="/patient" class="btn btn-success">My site</a>
             <a href="/logout" class="btn btn-success">Logout</a>
           {{else}}
               <input type="text" placeholder="Email" name="username" class="form-control">
@@ -30,7 +31,7 @@
               <input type="password" placeholder="Password" name="password" class="form-control">
             </div>
             <button type="submit" class="btn btn-success">Login</button>
-             <a href="/register" class="btn btn-success">Register</a>
+            <a href="/register" class="btn btn-success">Register</a>
           {{/if}}
           </form>
         </div><!--/.navbar-collapse -->

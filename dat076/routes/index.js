@@ -10,6 +10,10 @@ router.get('/', function(req, res){
 	res.render('index');
 });
 
+router.get('/user', function(req, res){
+	res.render('user');
+});
+
 // Register
 router.get('/register', function(req, res){
 	res.render('register');
@@ -85,10 +89,10 @@ passport.deserializeUser(function(id, done) {
 });
 
 router.post('/login',
-  passport.authenticate('local', {successRedirect:'/', failureRedirect:'/register',failureFlash: true}),
+  passport.authenticate('local', {successRedirect:'/user', failureRedirect:'/register',failureFlash: true}),
   function(req, res) {
-    res.redirect('/');
-});
+    res.render('user');
+})
   
   router.get('/logout', function(req, res){
 	req.logOut();
