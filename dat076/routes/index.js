@@ -5,6 +5,7 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 var User = require('../models/user');
+var Booking = require('../models/bookings');
 
 router.get('/', function(req, res){
 	res.render('index', {title: 'MedicalClinic'});
@@ -93,12 +94,6 @@ router.post('/login',
   function(req, res) {
     res.render('user');
 })
-  
-router.get('/logout', function(req, res){
-	req.logOut();
-	req.flash('success_msg','You have been logged out');
-	res.redirect('/');
-});
 
 router.post('/user', function(req, res){
 	var date		= req.body.datepicker;
@@ -113,21 +108,31 @@ router.post('/user', function(req, res){
 
 	var errors = req.validationErrors();
 
-	var newBooking = new Booking({
-		date: date,
-		startTime: startTime,
-		endTime: endTime
-	});
+	if(errors){
+		res.render('user',{
+			errors:errors
+		});
+	} else {
+		var newBooking = new Booking({
+			date: date,
+			startTime: startTime,
+			endTime: endTime
+		});
 
-	Booking.createBooking(newBooking, function(err, booking){
-		if(err) throw err;
-		console.log(booking);
-	});
+		Booking.createBooking(newBooking, function(err, booking){
+			if(err) throw err;
+			console.log(booking);
+		});
 
-	req.flash('success_msg', 'Your booking has been uploades');
-	res.redirect('/user');
-	
+		req.flash('success_msg', 'Your booking has been uploades');
+		res.redirect('/user');
+	}
 });
 
+router.get('/logout', function(req, res){
+	req.logOut();
+	req.flash('success_msg','You have been logged out');
+	res.redirect('/');
+});
 
 module.exports = router;
