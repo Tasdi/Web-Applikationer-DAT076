@@ -100,18 +100,14 @@ router.post('/user', function(req, res){
 	var startTime	= req.body.startTime;
 	var endTime		= req.body.endTime;
 
+
 	// Validation check
 	req.checkBody('datepicker', 'Date is required').notEmpty();
 	req.checkBody('startTime', 'Start time is required').notEmpty();
 	req.checkBody('endTime', 'End time is not valid').notEmpty();
 
 	var errors = req.validationErrors();
-
-	if(startTime === endTime) {
-		req.flash('success_msg', 'Your booking has been uploaded');
-		res.redirect('/');
-	}
-	if(errors){
+	if(errors || startTime == endTime){
 		res.render('user',{
 			errors:errors
 		});
