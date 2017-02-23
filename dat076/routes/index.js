@@ -101,13 +101,16 @@ router.post('/user', function(req, res){
 	var endTime		= req.body.endTime;
 
 	// Validation check
-	req.checkBody('date', 'Date is required').notEmpty();
+	req.checkBody('datepicker', 'Date is required').notEmpty();
 	req.checkBody('startTime', 'Start time is required').notEmpty();
-	req.checkBody('endTime', 'End time is not valid').isEmail();
-	req.checkBody('endTime', 'Start and end time cannot be the same').equals(req.body.startTime);
+	req.checkBody('endTime', 'End time is not valid').notEmpty();
 
 	var errors = req.validationErrors();
 
+	if(startTime === endTime) {
+		req.flash('success_msg', 'Your booking has been uploaded');
+		res.redirect('/');
+	}
 	if(errors){
 		res.render('user',{
 			errors:errors
@@ -124,7 +127,7 @@ router.post('/user', function(req, res){
 			console.log(booking);
 		});
 
-		req.flash('success_msg', 'Your booking has been uploades');
+		req.flash('success_msg', 'Your booking has been uploaded');
 		res.redirect('/user');
 	}
 });
