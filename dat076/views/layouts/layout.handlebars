@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>MedicalClinic</title>
-    <link rel="stylesheet" href="/css/bootstrap.css"/>
-     <link rel="stylesheet" href="/css/style.css"/>
+  <title>{{title}}</title>
+  <link rel="stylesheet" href="/css/bootstrap.css"/>
+  <link rel="stylesheet" href="/css/style.css"/>
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -22,7 +22,7 @@
             <div class="form-group">
           {{#if user}}
             <label style="color:white"> <font size="4"> Hi {{user.name}} &nbsp;&nbsp;</font></label>
-            <a href="/patient" class="btn btn-success">My site</a>
+            <a href="/user" class="btn btn-success">My site</a>
             <a href="/logout" class="btn btn-success">Logout</a>
           {{else}}
               <input type="text" placeholder="Email" name="username" class="form-control">

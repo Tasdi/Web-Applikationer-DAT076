@@ -4,19 +4,19 @@ var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
-var User = require('../models/user'); // Get Homepage
+var User = require('../models/user');
 
 router.get('/', function(req, res){
-	res.render('index');
+	res.render('index', {title: 'MedicalClinic'});
 });
 
 router.get('/user', function(req, res){
-	res.render('user');
+	res.render('user', {title: 'User'});
 });
 
 // Register
 router.get('/register', function(req, res){
-	res.render('register');
+	res.render('register', {title: 'Register'});
 });
 
 
@@ -27,7 +27,7 @@ router.post('/register', function(req, res){
 	var password = req.body.password;
 	var password2 = req.body.password2;
 
-	// Validation
+	// Validation check
 	req.checkBody('name', 'Name is required').notEmpty();
 	req.checkBody('email', 'Email is required').notEmpty();
 	req.checkBody('email', 'Email is not valid').isEmail();
@@ -94,7 +94,7 @@ router.post('/login',
     res.render('user');
 })
   
-  router.get('/logout', function(req, res){
+router.get('/logout', function(req, res){
 	req.logOut();
 	req.flash('success_msg','You have been logged out');
 	res.redirect('/');

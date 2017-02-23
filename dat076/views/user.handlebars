@@ -1,5 +1,30 @@
-{{#if user.isAdmin}}
-    <h1> Hi Admin</h1>
-{{else}}
-    <h1> Hi client</h1>
-{{/if}}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{title}}</title>
+    </head>
+    {{#if user.isAdmin}}
+        <body>
+            <h1> Welcomer Dr. {{user.name}}</h1>
+            <hr></hr>
+            <div>
+                <button typpe="button" class="adminButton">Show current bookings</button>
+                <hr></hr>
+            </div>
+            <div>
+                <button type="button" class="adminButton">Create a new booking</button>
+                <hr></hr>
+            <div>
+            <div>
+                <button typpe="button" class="adminButton">Edit your bookings</button>
+                <hr></hr>
+            </div>
+             <div>
+                <button typpe="button" class="adminButton">Show all patients</button>
+                <hr></hr>
+            </div>
+        </body>
+    {{else}}
+        <h1> Hi client</h1>
+    {{/if}}
+</html>
