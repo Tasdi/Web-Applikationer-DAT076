@@ -23,6 +23,10 @@ var BookingSchema = mongoose.Schema({
 	},
 	patient: {
 		type: String
+	},
+	isBooked: {
+		type: Boolean,
+		default: false
 	}
 });
 

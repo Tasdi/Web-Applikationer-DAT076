@@ -95,6 +95,13 @@ router.post('/login',
     res.render('user');
 })
 
+router.post('/showBookings', function(req, res){
+	Booking.find({})
+    	.then(function(doc) {
+        	res.render('user', {booking: doc});
+      	});
+});
+
 router.post('/user', function(req, res){
 	var date		= req.body.datepicker;
 	var startTime	= req.body.startTime;
@@ -143,10 +150,10 @@ router.get('/logout', function(req, res){
 });
 
 router.post('/showTable', function(req, res, next) {
-  Booking.find({'patient': "none"})
-      .then(function(doc) {
-        res.render('user', {items: doc});
-      });
+	Booking.find({'patient': "none"})
+    	.then(function(doc) {
+        	res.render('user', {items: doc});
+      	});
 });
 
 module.exports = router;

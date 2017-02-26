@@ -38,13 +38,32 @@
             <hr></hr>    
 
             <div>
-                <button typpe="button" class="adminButton">Show current bookings</button>
+                <form method="post" action="/showBookings">
+                <button typpe="button" class="adminButton">Show bookings</button>
+                <div id="bookingInfo">
+                        <table  border="1" cellpadding="10" cellspacing="10">
+                            <tr>
+                                <th>Date</th> <th>Start time</th> <th>End time</th> <th>Patient</th> <th>Status</th>
+                            </tr>
+                            {{# each booking }}
+                            <tr>
+                                    <td>{{ this.date }}</td>
+                                    <td>{{ this.startTime }}</td>
+                                    <td>{{ this.endTime }}</td>
+                                    <td>{{ this.patient }}</td>
+                                    <td>{{ this.isBooked }}</td>
+                                    
+                            </tr>
+                            {{/each}}
+                        </table>
+                </div>
+                </form>
                 <hr></hr>
             </div>
 
             <div>
                 <form method="post" action="/user">
-                    <button type="button" class="adminButton" onclick="toggle()">Create a new booking</button> <!-- onclick="toggle()" -->
+                    <button type="button" class="adminButton1" onclick="toggle()">Create a new booking</button>
                     <div id="createSchema" style="display:none">
                         <div class="form-group">
                             <label>Date</label><br>
@@ -75,9 +94,8 @@
 
              <div>
                  <form method="post" action="/getPatient">
-
                     <button typpe="button" class="adminButton">Show all patients</button>
-                    <div>
+                    <div id="patientInfo">
                         <table  border="1" cellpadding="10" cellspacing="10">
                             <tr>
                                 <th>Name</th> <th>Email</th>
@@ -95,18 +113,6 @@
 
                 <hr></hr>
             </div>
-    
-           <script>
-                function toggle() { 
-                    var toggle = document.getElementById('createSchema');
-                    if (toggle.style.display == 'none') {
-                        toggle.style.display = 'block';
-                    } else {
-                        toggle.style.display = 'none';
-                    }
-                }
-            </script>
-
         </body>
     {{else}}
         <body>
@@ -143,8 +149,18 @@
                   <hr></hr>
                   </form>
             </div>
-              
-
         </body>
     {{/if}}
+    
+<script>
+function toggle() { 
+    var toggle = document.getElementById('createSchema');
+    if (toggle.style.display == 'none') {
+        toggle.style.display = 'block'; 
+    } else {
+        toggle.style.display = 'none';    
+    }
+}
+</script>
+
 </html>

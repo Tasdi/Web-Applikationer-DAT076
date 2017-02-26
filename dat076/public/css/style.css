@@ -27,3 +27,22 @@ body {
   background:#370;
   color: #e3e3e3;
 }
+
+.adminButton1 {
+  line-height: 45px;
+  width: 300px;
+  text-align: center;
+  font-weight: bold;
+  color: #333;
+  background-color: #e3e3e3;
+  border-top-right-radius: 7px;
+  border-top-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+  border-bottom-left-radius: 7px;
+  box-shadow: 0px 0px 2px rgba(0,0,0,.5), 1px 1px 5px rgba(0,0,0,.3);
+}
+
+.adminButton1:hover {
+  background:#370;
+  color: #e3e3e3;
+}
