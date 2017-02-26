@@ -20,6 +20,9 @@ var BookingSchema = mongoose.Schema({
 	},
 	endTime: {
 		type: String
+	},
+	patient: {
+		type: String
 	}
 });
 

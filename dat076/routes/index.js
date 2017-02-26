@@ -115,7 +115,8 @@ router.post('/user', function(req, res){
 		var newBooking = new Booking({
 			date: date,
 			startTime: startTime,
-			endTime: endTime
+			endTime: endTime,
+			patient: "none"
 		});
 
 		Booking.createBooking(newBooking, function(err, booking){
@@ -132,6 +133,13 @@ router.get('/logout', function(req, res){
 	req.logOut();
 	req.flash('success_msg','You have been logged out');
 	res.redirect('/');
+});
+
+router.get('/showTable', function(req, res, next) {
+  Booking.find({'patient': "none"})
+      .then(function(doc) {
+        res.render('user', {items: doc});
+      });
 });
 
 module.exports = router;
