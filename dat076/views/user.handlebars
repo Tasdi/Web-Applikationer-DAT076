@@ -74,7 +74,25 @@
             </div>
 
              <div>
-                <button typpe="button" class="adminButton">Show all patients</button>
+                 <form method="post" action="/getPatient">
+
+                    <button typpe="button" class="adminButton">Show all patients</button>
+                    <div>
+                        <table  border="1" cellpadding="10" cellspacing="10">
+                            <tr>
+                                <th>Name</th> <th>Email</th>
+                            </tr>
+                            {{# each patient }}
+                            <tr>
+                                    <td> {{ this.name }}</td>
+                                    <td>{{ this.email }}</td>
+                            </tr>
+                            {{/each}}
+                        </table>
+                    </div>
+
+                 </form>
+
                 <hr></hr>
             </div>
     

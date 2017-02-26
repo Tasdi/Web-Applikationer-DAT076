@@ -129,6 +129,13 @@ router.post('/user', function(req, res){
 	}
 });
 
+router.post('/getPatient', function(req,res){
+	User.find().then(function(doc) {
+		console.log(doc);
+        res.render('user', {patient: doc});
+	});
+});
+
 router.get('/logout', function(req, res){
 	req.logOut();
 	req.flash('success_msg','You have been logged out');
