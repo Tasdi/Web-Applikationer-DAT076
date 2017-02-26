@@ -11,9 +11,18 @@ router.get('/', function(req, res){
 	res.render('index', {title: 'MedicalClinic'});
 });
 
-router.get('/user', function(req, res){
+router.get('/user', ensureAuthenticated, function(req, res){
 	res.render('user', {title: 'User'});
 });
+
+function ensureAuthenticated(req, res, next){
+	if(req.isAuthenticated()){
+		return next();
+	} else {
+		req.flash('error_msg','You are not logged in');
+		res.redirect('/');
+	}
+}
 
 // Register
 router.get('/register', function(req, res){
@@ -90,10 +99,8 @@ passport.deserializeUser(function(id, done) {
 });
 
 router.post('/login',
-  passport.authenticate('local', {successRedirect:'/user', failureRedirect:'/register',failureFlash: true}),
-  function(req, res) {
-    res.render('user');
-})
+  passport.authenticate('local', {successRedirect:'/user', failureRedirect:'/register',failureFlash: true})
+);
 
 router.post('/showBookings', function(req, res){
 	Booking.find({})
@@ -123,7 +130,7 @@ router.post('/user', function(req, res){
 			date: date,
 			startTime: startTime,
 			endTime: endTime,
-			patient: "none"
+			patient: "t"
 		});
 
 		Booking.createBooking(newBooking, function(err, booking){
@@ -150,7 +157,7 @@ router.get('/logout', function(req, res){
 });
 
 router.post('/showTable', function(req, res, next) {
-	Booking.find({'patient': "none"})
+	Booking.find({'patient': req.user.username})
     	.then(function(doc) {
         	res.render('user', {items: doc});
       	});
