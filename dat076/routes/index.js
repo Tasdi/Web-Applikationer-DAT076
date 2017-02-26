@@ -142,7 +142,7 @@ router.get('/logout', function(req, res){
 	res.redirect('/');
 });
 
-router.get('/showTable', function(req, res, next) {
+router.post('/showTable', function(req, res, next) {
   Booking.find({'patient': "none"})
       .then(function(doc) {
         res.render('user', {items: doc});
