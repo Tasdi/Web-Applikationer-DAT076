@@ -144,7 +144,7 @@ router.post('/user', function(req, res){
 });
 
 router.post('/getPatient', function(req,res){
-	User.find().then(function(doc) {
+	User.find({'isAdmin': false}).then(function(doc) {
 		console.log(doc);
         res.render('user', {patient: doc});
 	});
