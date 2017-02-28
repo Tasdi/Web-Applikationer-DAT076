@@ -161,7 +161,7 @@ router.post('/user', function(req, res){
 			date: date,
 			startTime: startTime,
 			endTime: endTime,
-			patient: "t"
+			patient: "none"
 		});
 
 		Booking.createBooking(newBooking, function(err, booking){
@@ -194,4 +194,19 @@ router.post('/showTable', function(req, res, next) {
       	});
 });
 
+router.post('/bookTime', function(req, res, next) {
+	Booking.find({'patient': "none"})
+    	.then(function(doc) {
+        	res.render('patient', {bookings: doc});
+      	});
+});
+ 
+ router.post('/bookIt', function(req, res, next){
+	 console.log(req.body.name);
+	Booking.findOne({ 'name.last': req.body.name}, function (err, booking) {
+  		if (err) return handleError(err);
+		booking.patient = req.user.username;
+		res.redirect('/');
+	});
+});
 module.exports = router;
