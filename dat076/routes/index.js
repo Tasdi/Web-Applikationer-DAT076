@@ -1,52 +1,59 @@
 var express = require('express');
 var router = express.Router();
-
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 var User = require('../models/user');
 var Booking = require('../models/bookings');
 
+/* Renders the homepage */
+
 router.get('/', function(req, res){
 	res.render('index', {title: 'MedicalClinic'});
 });
 
-router.get('/patient', ensureAuthenticatedClient , function(req, res){
-	res.render('patient');
+/* Renders the page for a patient, uses an authenticated method so that a
+patient cannot route to the page of admin */
+
+router.get('/patient', ensureAuthenticateClient , function(req, res){
+	res.render('patient', {title: req.user.name});
 });
 
-router.get('/user', ensureAuthenticatedAdmin, function(req, res){
-	res.render('user', {title: 'User'});
+/* Renders the page for an admin, uses an authenticated method so that a
+admin cannot route to the page of a patient */
+
+router.get('/admin', ensureAuthenticateAdmin, function(req, res){
+	res.render('admin', {title: req.user.name});
 });
 
-function ensureAuthenticatedAdmin(req, res, next){
-	if(req.isAuthenticated()){
-		if(req.user.isAdmin){
+/*Ensures that admin cannot route to homepage of a client */
+function ensureAuthenticateAdmin(req, res, next) {
+	if(req.isAuthenticated() && req.user.isAdmin){
 			return next();
-		}
-	}  
-		req.flash('error_msg','You dont have the authorization');
-		res.redirect('/');
-	
+	}
+
+	req.flash('error_msg','You dont have the authorization');
+	res.redirect('/');	
 }
 
-function ensureAuthenticatedClient(req, res, next){
-	if(req.isAuthenticated()){
-		if(!req.user.isAdmin){
+/*Ensures that patient cannot route to homepage of an admin */
+function ensureAuthenticateClient(req, res, next) {
+	if(req.isAuthenticated() && (!req.user.isAdmin)){
 			return next();
-		}
 	} 
-		req.flash('error_msg','You dont have the authorization');
-		res.redirect('/');
-	
+
+	req.flash('error_msg','You dont have the authorization');
+	res.redirect('/');
 }
 
-// Register
-router.get('/register', function(req, res){
+/* Renders registration page */
+router.get('/register', function(req, res) {
 	res.render('register', {title: 'Register'});
 });
 
-
+/* Post method to register a user. Uses validation check to see if all required fields are filled.
+//Checks whether user already exist in the databse i.e. registered, if the password typed in for a user
+//is correct, etc. */
 router.post('/register', function(req, res){
 	var name = req.body.name;
 	var email = req.body.email;
@@ -117,15 +124,19 @@ passport.deserializeUser(function(id, done) {
 
 router.post('/login', function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
-    if (err) { return next(err); }
-    if (!user) { return res.redirect('/register'); }
+  	if (err) { 
+		return next(err); 
+	}
+    if (!user) { 
+		return res.redirect('/register');
+	}
     req.logIn(user, function(err) {
-      if (err) { return next(err); }
-	  if(req.user.isAdmin)
-	  {
-		return res.redirect('/user');
+      if(err) {
+		  return next(err);
 	  }
-	  else{
+	  if(req.user.isAdmin) {
+		  return res.redirect('/admin');
+	  } else{
 		  return res.redirect('/patient');
 	  }
       
@@ -136,11 +147,11 @@ router.post('/login', function(req, res, next) {
 router.post('/showBookings', function(req, res){
 	Booking.find({})
     	.then(function(doc) {
-        	res.render('user', {booking: doc});
+        	res.render('admin', {booking: doc});
       	});
 });
 
-router.post('/user', function(req, res){
+router.post('/createBooking', function(req, res){
 	var date		= req.body.datepicker;
 	var startTime	= req.body.startTime;
 	var endTime		= req.body.endTime;
@@ -153,7 +164,7 @@ router.post('/user', function(req, res){
 
 	var errors = req.validationErrors();
 	if(errors || startTime == endTime){
-		res.render('user',{
+		res.render('admin',{
 			errors:errors
 		});
 	} else {
@@ -170,14 +181,14 @@ router.post('/user', function(req, res){
 		});
 
 		req.flash('success_msg', 'Your booking has been uploaded');
-		res.redirect('/user');
+		res.redirect('/admin');
 	}
 });
 
-router.post('/getPatient', function(req,res){
+router.post('/showPatients', function(req,res){
 	User.find({'isAdmin': false}).then(function(doc) {
 		console.log(doc);
-        res.render('user', {patient: doc});
+        res.render('admin', {patient: doc});
 	});
 });
 
@@ -193,15 +204,13 @@ router.post('/showTable', function(req, res, next) {
         	res.render('patient', {items: doc});
       	});
 });
-
 router.post('/bookTime', function(req, res, next) {
 	Booking.find({'patient': "none"})
     	.then(function(doc) {
         	res.render('patient', {bookings: doc});
       	});
 });
- 
- router.post('/bookIt', function(req, res, next){
+router.post('/bookIt', function(req, res, next){
 	 console.log(req.body.name);
 	Booking.findOne({ 'name.last': req.body.name}, function (err, booking) {
   		if (err) return handleError(err);
