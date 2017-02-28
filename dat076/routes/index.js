@@ -127,7 +127,8 @@ router.post('/login', function(req, res, next) {
   	if (err) { 
 		return next(err); 
 	}
-    if (!user) { 
+    if (!user) {
+		req.flash('error_msg', 'Incorrect username or password. Fill in the form below if you are not registered');
 		return res.redirect('/register');
 	}
     req.logIn(user, function(err) {
