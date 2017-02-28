@@ -11,17 +11,34 @@ router.get('/', function(req, res){
 	res.render('index', {title: 'MedicalClinic'});
 });
 
-router.get('/user', ensureAuthenticated, function(req, res){
+router.get('/patient', ensureAuthenticatedClient , function(req, res){
+	res.render('patient');
+});
+
+router.get('/user', ensureAuthenticatedAdmin, function(req, res){
 	res.render('user', {title: 'User'});
 });
 
-function ensureAuthenticated(req, res, next){
+function ensureAuthenticatedAdmin(req, res, next){
 	if(req.isAuthenticated()){
-		return next();
-	} else {
-		req.flash('error_msg','You are not logged in');
+		if(req.user.isAdmin){
+			return next();
+		}
+	}  
+		req.flash('error_msg','You dont have the authorization');
 		res.redirect('/');
-	}
+	
+}
+
+function ensureAuthenticatedClient(req, res, next){
+	if(req.isAuthenticated()){
+		if(!req.user.isAdmin){
+			return next();
+		}
+	} 
+		req.flash('error_msg','You dont have the authorization');
+		res.redirect('/');
+	
 }
 
 // Register
@@ -98,9 +115,23 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-router.post('/login',
-  passport.authenticate('local', {successRedirect:'/user', failureRedirect:'/register',failureFlash: true})
-);
+router.post('/login', function(req, res, next) {
+  passport.authenticate('local', function(err, user, info) {
+    if (err) { return next(err); }
+    if (!user) { return res.redirect('/register'); }
+    req.logIn(user, function(err) {
+      if (err) { return next(err); }
+	  if(req.user.isAdmin)
+	  {
+		return res.redirect('/user');
+	  }
+	  else{
+		  return res.redirect('/patient');
+	  }
+      
+    });
+  })(req, res, next);
+});
 
 router.post('/showBookings', function(req, res){
 	Booking.find({})
@@ -159,7 +190,7 @@ router.get('/logout', function(req, res){
 router.post('/showTable', function(req, res, next) {
 	Booking.find({'patient': req.user.username})
     	.then(function(doc) {
-        	res.render('user', {items: doc});
+        	res.render('patient', {items: doc});
       	});
 });
 

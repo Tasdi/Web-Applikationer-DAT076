@@ -1,1 +1,42 @@
-<h1> Hello admind </h1>
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{title}}</title>
+    </head>
+
+    <body>
+                <h1> Client side</h1>
+                <hr></hr>
+                {{#if errors}}
+                    {{#each errors}}
+                    <div class="alert alert-danger">{{msg}}</div>
+                    {{/each}}
+                {{/if}}
+                <hr></hr>    
+
+                <div>
+                    <button typpe="button" class="adminButton">Book a time</button>
+                    <hr></hr>
+                </div>
+                
+                <div id="showing">
+                    <form method="post" action="/showTable">
+                    <button typpe="button" class="adminButton">My Bookings</button>
+                    <table  border="1" cellpadding="10" cellspacing="10">
+                            <tr>
+                                <th>Date</th> <th>starttime</th> <th>endTime</th>
+                            </tr>
+                        {{# each items }}
+                        <tr>
+                            <td> {{ this.date }}</td>
+                            <td>{{ this.startTime }}</td>
+                            <td> {{ this.endTime }}</td>
+                        </tr>
+                        {{/each}}
+                    </table>
+                </div>
+                    <hr></hr>
+                    </form>
+                </div>
+            </body>
+</html>
