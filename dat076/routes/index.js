@@ -256,7 +256,7 @@ router.post('/bookTime', function(req, res, next) {
 });
 router.post('/bookIt', function(req, res, next){
 	 console.log(req.body.id);
-	Booking.update({'_id':req.body.id},{$set:{patient:req.user.username}}, function (err, result) {
+	Booking.update({'_id':req.body.id},{$set:{patient:req.user.username, isBooked:'true'}}, function (err, result) {
   		if (err) return handleError(err);
 		   
 		res.redirect('/patient');

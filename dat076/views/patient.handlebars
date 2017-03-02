@@ -26,15 +26,16 @@
                             </tr>
                         {{# each bookings }}
                         <tr>
-                            <form method="POST" action="/bookIt">
-                                <td id="one"> {{ this.date }}</td>
-                                <td id="two"> {{ this.startTime }}</td>
-                                <td id="three"> {{ this.endTime }}</td>
-                                <td>
-                                    <input type="hidden" name="id" value={{this.id}}>
-                                    <input type="submit" value="book">
-                                </td>
-                            </form>
+                            <td id="one"> {{ this.date }}</td>
+                            <td id="two"> {{ this.startTime }}</td>
+                            <td id="three"> {{ this.endTime }}</td>
+                            <td>
+                             <form method="POST" action="/bookIt">
+                                 <input type="hidden" name="id" value={{this.id}}>
+                                 <input type="submit" value="book">
+                             </form>
+                            </td>
+                            
                         </tr>
                         {{/each}}
                     </table>
