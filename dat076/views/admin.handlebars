@@ -40,6 +40,7 @@
         <div>
             <form method="post" action="/showBookings">
             <button typpe="button" class="adminButton">Show bookings</button>
+            </form>
             <div id="bookingInfo">
                 <div class="headers"> show the headers</div>
                 <ul  border="1" cellpadding="10" cellspacing="10" id="bookingTable">
@@ -49,18 +50,19 @@
                     {{# each booking }}
                     <li>
                         <ul>
-                            <input class="form-control:focus" value="{{this.date}}">
-                            <input class="sTime" value="{{ this.startTime }}">
-                            <input class="eTime" value="{{this.endTime }}">
-                            <input class="thisStatus" value="{{ this.isBooked }}">
-                            <a href="/logout" class="btn btn-success">Update</a>
-                            <a href="/logout" class="btn btn-success">Delete</a>
+                            <form method="POST" action="/updateTable">
+                            <input type="text" class="form-control:focus" name="date" value="{{this.date}}" >
+                            <input type="text" class="form-control:focus" name="startTime" value="{{this.startTime}}">
+                            <input type="text" class="form-control:focus" name="endTime" value="{{this.endTime}}">
+                            <input value={{ this.isBooked }}>
+                            <input type="hidden" name="id" value={{this.id}}>
+                            <input type="submit" value="update">
+                             </form>
                         </ul>
                     </li>
                     {{/each}}
                 </ul>
             </div>
-            </form>
             <hr></hr>
         </div>
 

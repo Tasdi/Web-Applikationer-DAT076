@@ -242,6 +242,18 @@ router.get('/logout', function(req, res){
 	res.redirect('/');
 });
 
+router.post('/updateTable', function(req, res, next){
+	Booking.update({'_id':req.body.id},{$set:{
+		date:req.body.date,
+		startTime:req.body.startTime,
+		endTime:req.body.endTime}}, function(err,result){
+			if (err) return handleError(err);
+			//console.log(req.body.date);
+			res.redirect('/admin');
+		});
+});
+
+
 router.post('/showTable', function(req, res, next) {
 	Booking.find({'patient': req.user.username})
     	.then(function(doc) {
