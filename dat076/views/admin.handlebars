@@ -41,20 +41,24 @@
             <form method="post" action="/showBookings">
             <button typpe="button" class="adminButton">Show bookings</button>
             <div id="bookingInfo">
-                <table  border="1" cellpadding="10" cellspacing="10">
-                    <tr>
-                        <th>Date</th> <th>Start time</th> <th>End time</th> <th>Patient</th> <th>Status</th>
-                    </tr>
+                <div class="bajs">FSDF</div>
+                <ul  border="1" cellpadding="10" cellspacing="10" id="bookingTable">
+                   <!-- <li>
+                        <thead>Date</thead> <thead>Start time</thead> <thead>End time</thead> <thead>Status</thead>
+                    </li> -->
                     {{# each booking }}
-                    <tr>
-                        <td>{{ this.date }}</td>
-                        <td>{{ this.startTime }}</td>
-                        <td>{{ this.endTime }}</td>
-                        <td>{{ this.patient }}</td>
-                        <td>{{ this.isBooked }}</td>
-                    </tr>
+                    <li>
+                        <ul>
+                            <input class="form-control:focus" value="{{this.date}}">
+                            <input class="sTime" value="{{ this.startTime }}">
+                            <input class="eTime" value="{{this.endTime }}">
+                            <input class="thisStatus" value="{{ this.isBooked }}">
+                            <a href="/logout" class="btn btn-success">Update</a>
+                            <a href="/logout" class="btn btn-success">Delete</a>
+                        </ul>
+                    </li>
                     {{/each}}
-                </table>
+                </ul>
             </div>
             </form>
             <hr></hr>
