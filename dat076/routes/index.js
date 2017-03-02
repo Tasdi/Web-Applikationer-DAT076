@@ -261,5 +261,14 @@ router.post('/bookIt', function(req, res, next){
 		   
 		res.redirect('/patient');
 	});
+});
+
+router.post('/unbookIt', function(req, res, next){
+	 console.log(req.body.id);
+	Booking.update({'_id':req.body.id},{$set:{patient:'none', isBooked:'false'}}, function (err, result) {
+  		if (err) return handleError(err);
+		   
+		res.redirect('/patient');
+	});
 })
 module.exports = router;

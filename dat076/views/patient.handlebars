@@ -45,6 +45,7 @@
         <div id="showing">
             <form method="post" action="/showTable">
             <button typpe="button" class="adminButton">My Bookings</button>
+            </form>
                 <table  border="1" cellpadding="10" cellspacing="10">
                     <tr>
                         <th>Date</th> <th>starttime</th> <th>endTime</th>
@@ -54,12 +55,18 @@
                         <td> {{ this.date }}</td>
                         <td>{{ this.startTime }}</td>
                         <td> {{ this.endTime }}</td>
+                        <td>
+                            <form method="POST" action="/unbookIt">
+                                 <input type="hidden" name="id" value={{this.id}}>
+                                 <input type="submit" value="unbook">
+                             </form>
+                        </td>
                     </tr>
                     {{/each}}
                 </table>
             </div>
             <hr></hr>
-            </form>
+            
             </div>
     </body>
 </html>

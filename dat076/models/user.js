@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcryptjs');
 
 var mongodbUri = 'mongodb://dat076_project:rucus1@ds157439.mlab.com:57439/database_clinic';
-
+mongoose.Promise = global.Promise;
 mongoose.createConnection(mongodbUri);
 var conn = mongoose.connection;
 
