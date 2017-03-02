@@ -19,6 +19,31 @@ router.get('/patient', ensureAuthenticateClient , function(req, res){
 	res.render('patient', {title: req.user.name});
 });
 
+router.post('/test' , function(req, res){
+
+	var username = req.body.username;
+	var email = req.body.email;
+	
+	console.log(username);
+	console.log(email);
+
+	User.getUserByUsername(username, function(err, user){
+		if(err) throw err;
+		if(user){
+			console.log('Uname upptaget');
+		} 
+	});
+
+	User.getEmail(email, function(err, email){
+		if(err) throw err;
+		if(email){
+			console.log('Email upptaget');
+		}
+	});
+
+	res.redirect('/');
+});
+
 /* Renders the page for an admin, uses an authenticated method so that a
 admin cannot route to the page of a patient */
 
@@ -76,20 +101,38 @@ router.post('/register', function(req, res){
 			errors:errors
 		});
 	} else {
-		var newUser = new User({
-			name: name,
-			email:email,
-			username: username,
-			password: password
-		});
+		User.getUserByUsername(username, function(err, user){
+			User.getEmail(email, function(err, email) {
+				if(err) {
+					throw err;
+					
+				} else if(user && email) {
+					req.flash('error_msg', 'Username and email in use');
+					res.redirect('/');
+				} else if(user) {
+					req.flash('error_msg', 'Username in use');
+					res.redirect('/');
+				} else if(email){
+					req.flash('error_msg', 'Email in use');
+					res.redirect('/');
+				} else {
+					var newUser = new User({
+						name: name,
+						email:email,
+						username: username,
+						password: password
+					});
 
-		User.createUser(newUser, function(err, user){
-			if(err) throw err;
-			console.log(user);
-		});
+					User.createUser(newUser, function(err, user){
+						if(err) throw err;
+						console.log(user);
+					});
 
-		req.flash('success_msg', 'You are registered and can now login');
-		res.redirect('/');
+					req.flash('success_msg', 'You are registered and can now login');
+					res.redirect('/');				
+				}
+			});		
+		});
 	}
 });
 
