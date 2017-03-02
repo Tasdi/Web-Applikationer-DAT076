@@ -255,11 +255,11 @@ router.post('/bookTime', function(req, res, next) {
       	});
 });
 router.post('/bookIt', function(req, res, next){
-	 console.log(req.body.name);
-	Booking.findOne({ 'name.last': req.body.name}, function (err, booking) {
+	 console.log(req.body.id);
+	Booking.update({'_id':req.body.id},{$set:{patient:req.user.username}}, function (err, result) {
   		if (err) return handleError(err);
-		booking.patient = req.user.username;
-		res.redirect('/');
+		   
+		res.redirect('/patient');
 	});
-});
+})
 module.exports = router;

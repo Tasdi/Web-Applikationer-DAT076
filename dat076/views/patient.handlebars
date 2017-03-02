@@ -18,27 +18,26 @@
         <div>
             <form method="POST" action="/bookTime">
                         <button  class="adminButton">Book a time</button>
-                         <table  border="1" cellpadding="10" cellspacing="10">
+                        </form>
+
+                         <table id="table"  border="1" cellpadding="10" cellspacing="10">
                             <tr>
                                 <th>Date</th> <th>starttime</th> <th>endTime</th> <th>Book</th>
                             </tr>
                         {{# each bookings }}
                         <tr>
-                            <td> {{ this.date }}</td>
-                            <td>{{ this.startTime }}</td>
-                            <td> {{ this.endTime }}</td>
-                            <td>
-                                <form method="POST" action="/bookIt">
-                                <INPUT TYPE="submit" VALUE= "book", name={{this.date}}>
-                                </form>
-                            </td>
-                                
+                            <form method="POST" action="/bookIt">
+                                <td id="one"> {{ this.date }}</td>
+                                <td id="two"> {{ this.startTime }}</td>
+                                <td id="three"> {{ this.endTime }}</td>
+                                <td>
+                                    <input type="hidden" name="id" value={{this.id}}>
+                                    <input type="submit" value="book">
+                                </td>
+                            </form>
                         </tr>
                         {{/each}}
                     </table>
-                        
-                        
-                    </form>
                     <hr></hr>
         </div>
         
