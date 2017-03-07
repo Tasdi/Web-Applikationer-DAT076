@@ -30,6 +30,10 @@ var UserSchema = mongoose.Schema({
 	isAdmin: {
 		type: Boolean,
 		default: false
+	},
+	hasBooked: {
+		type: Boolean,
+		default: false
 	}
 });
 

@@ -243,19 +243,31 @@ router.post('/bookTime', function(req, res, next) {
 });
 router.post('/bookIt', function(req, res, next){
 	 console.log(req.body.id);
-	Booking.update({'_id':req.body.id},{$set:{patient:req.user.username, isBooked:'true'}}, function (err, result) {
+	 if(!req.user.hasBooked){
+		Booking.update({'_id':req.body.id},{$set:{patient:req.user.username, isBooked:'true'}}, function (err, result) {
   		if (err) return handleError(err);
-		   
-		res.redirect('/patient');
 	});
+		User.update({'_id':req.user.id},{$set:{hasBooked:'true'}}, function (err, result) {
+  		if (err) return handleError(err);
+	});
+	res.redirect('/patient');
+}
+	else{
+		req.flash('error_msg', 'You already booked one');
+		res.redirect('/patient');
+	}
+
 });
 
 router.post('/unbookIt', function(req, res, next){
 	 console.log(req.body.id);
 	Booking.update({'_id':req.body.id},{$set:{patient:'none', isBooked:'false'}}, function (err, result) {
   		if (err) return handleError(err);
-		   
-		res.redirect('/patient');
 	});
+
+	User.update({'_id':req.user.id},{$set:{hasBooked:'false'}}, function (err, result) {
+  		if (err) return handleError(err);
+	});
+	res.redirect('/patient');
 })
 module.exports = router;
