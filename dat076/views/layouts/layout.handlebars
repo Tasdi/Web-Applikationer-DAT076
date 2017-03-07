@@ -21,7 +21,7 @@
           <form class="navbar-form navbar-right" method="post" action="/login">
             <div class="form-group">
           {{#if user}}
-            <label style="color:white"> <font size="4"> Hi {{user.name}} &nbsp;&nbsp;</font></label>
+           <!-- <label style="color:white"> <font size="4"> Hi {{user.name}} &nbsp;&nbsp;</font></label> -->
             {{#if user.isAdmin}}
             <a href="/admin" class="btn btn-success">My site</a>
             {{else}}

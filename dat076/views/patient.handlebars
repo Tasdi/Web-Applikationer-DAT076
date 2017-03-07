@@ -20,15 +20,11 @@
                         <button  class="adminButton">Book a time</button>
                         </form>
 
-                         <table border="1" cellpadding="10" cellspacing="10">
-                            <tr>
-                                <th>Date</th> <th>starttime</th> <th>endTime</th> <th>Book</th>
-                            </tr>
+                         <table border="5" cellpadding="10" cellspacing="10">
                         {{# each bookings }}
                         <tr>
                             <td> {{ this.date }}</td>
-                            <td> {{ this.startTime }}</td>
-                            <td> {{ this.endTime }}</td>
+                            <td> {{ this.startTime }} - {{ this.endTime }}</td>
                             <td>
                              <form method="POST" action="/bookIt">
                                  <input type="hidden" name="id" value={{this.id}}>
@@ -46,15 +42,11 @@
             <form method="post" action="/showTable">
             <button typpe="button" class="adminButton">My Bookings</button>
             </form>
-                <table  border="1" cellpadding="10" cellspacing="10">
-                    <tr>
-                        <th>Date</th> <th>starttime</th> <th>endTime</th>
-                    </tr>
+                <table  border="5" cellpadding="10" cellspacing="10">
                     {{# each items }}
                     <tr>
                         <td> {{ this.date }}</td>
-                        <td>{{ this.startTime }}</td>
-                        <td> {{ this.endTime }}</td>
+                        <td>{{ this.startTime }} - {{ this.endTime }}</td>
                         <td>
                             <form method="POST" action="/unbookIt">
                                  <input type="hidden" name="id" value={{this.id}}>
