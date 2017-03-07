@@ -19,31 +19,6 @@ router.get('/patient', ensureAuthenticateClient , function(req, res){
 	res.render('patient', {title: req.user.name});
 });
 
-router.post('/test' , function(req, res){
-
-	var username = req.body.username;
-	var email = req.body.email;
-	
-	console.log(username);
-	console.log(email);
-
-	User.getUserByUsername(username, function(err, user){
-		if(err) throw err;
-		if(user){
-			console.log('Uname upptaget');
-		} 
-	});
-
-	User.getEmail(email, function(err, email){
-		if(err) throw err;
-		if(email){
-			console.log('Email upptaget');
-		}
-	});
-
-	res.redirect('/');
-});
-
 /* Renders the page for an admin, uses an authenticated method so that a
 admin cannot route to the page of a patient */
 
@@ -207,7 +182,7 @@ router.post('/createBooking', function(req, res){
 	req.checkBody('endTime', 'End time is not valid').notEmpty();
 
 	var errors = req.validationErrors();
-	if(errors || startTime == endTime){
+	if(errors || startTime == endTime || endTime < startTime){
 		res.render('admin',{
 			errors:errors
 		});
@@ -248,7 +223,7 @@ router.post('/updateTable', function(req, res, next){
 		startTime:req.body.startTime,
 		endTime:req.body.endTime}}, function(err,result){
 			if (err) return handleError(err);
-			//console.log(req.body.date);
+			req.flash('success_msg', 'updated');
 			res.redirect('/admin');
 		});
 });

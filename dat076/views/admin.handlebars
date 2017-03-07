@@ -28,7 +28,7 @@
     </head>
 
     <body>
-        <h1> Welcomer Dr. {{user.name}}</h1>
+        <h1> Hello Dr. {{user.name}}</h1>
         <hr></hr>
         {{#if errors}}
             {{#each errors}}
@@ -39,27 +39,22 @@
 
         <div>
             <form method="post" action="/showBookings">
-            <button typpe="button" class="adminButton">Show bookings</button>
+            <button typpe="button" class="adminButton">Show bookings </button>
             </form>
             <div id="bookingInfo">
-                <div class="headers"> show the headers</div>
                 <ul  border="1" cellpadding="10" cellspacing="10" id="bookingTable">
-                   <!-- <li>
-                        <thead>Date</thead> <thead>Start time</thead> <thead>End time</thead> <thead>Status</thead>
-                    </li> -->
                     {{# each booking }}
-                    <li>
+                        <hr></hr>
                         <ul>
                             <form method="POST" action="/updateTable">
-                            <input type="text" class="form-control:focus" name="date" value="{{this.date}}" >
-                            <input type="text" class="form-control:focus" name="startTime" value="{{this.startTime}}">
-                            <input type="text" class="form-control:focus" name="endTime" value="{{this.endTime}}">
-                            <input value={{ this.isBooked }}>
-                            <input type="hidden" name="id" value={{this.id}}>
-                            <input type="submit" value="update">
-                             </form>
-                        </ul>
-                    </li>
+                                <input type="text" class="form-control:focus" name="date" value="{{this.date}}" >
+                                <input type="text" class="form-control:focus" name="startTime" value="{{this.startTime}}">
+                                <input type="text" class="form-control:focus" name="endTime" value="{{this.endTime}}">
+                                <input value={{ this.isBooked }}>
+                                <input type="hidden" name="id" value={{this.id}}>
+                                <input type="submit" value="update">
+                            </form>
+                    </ul>   
                     {{/each}}
                 </ul>
             </div>
@@ -93,11 +88,6 @@
                 </div>
                 <hr></hr>
             </form>
-        </div>
-
-        <div>
-            <button typpe="button" class="adminButton">Edit your bookings</button>
-            <hr></hr>
         </div>
 
         <div>
