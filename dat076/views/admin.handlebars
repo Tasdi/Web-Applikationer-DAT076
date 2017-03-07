@@ -47,14 +47,14 @@
                         <hr></hr>
                         <ul>
                             <form method="POST" action="/updateTable">
-                                <input type="text" class="form-control:focus" name="date" value="{{this.date}}" >
-                                <input type="text" class="form-control:focus" name="startTime" value="{{this.startTime}}">
-                                <input type="text" class="form-control:focus" name="endTime" value="{{this.endTime}}">
-                                <input value={{ this.isBooked }}>
+                                <input type="text" class="form-control:focus" name="date" value="{{this.date}}" style="text-align:center;" >
+                                <input type="text" class="form-control:focus" name="startTime" value="{{this.startTime}}" style="text-align:center;">
+                                <input type="text" class="form-control:focus" name="endTime" value="{{this.endTime}}" style="text-align:center;">
+                                <input value={{ this.patient }} style="text-align:center;" readonly>
                                 <input type="hidden" name="id" value={{this.id}}>
                                 <input type="submit" value="update">
                             </form>
-                    </ul>   
+                        </ul>   
                     {{/each}}
                 </ul>
             </div>
@@ -94,17 +94,15 @@
             <form method="post" action="/showPatients">
             <button typpe="button" class="adminButton">Show all patients</button>
             <div id="patientInfo">
-                <table  border="1" cellpadding="10" cellspacing="10">
-                    <tr>
-                        <th>Name</th> <th>Email</th>
-                    </tr>
+                <ul border="1" cellpadding="10" cellspacing="10" id="bookingTable">
                     {{# each patient }}
-                    <tr>
-                        <td> {{ this.name }}</td>
-                        <td>{{ this.email }}</td>
-                    </tr>
+                        <hr></hr>
+                        <ul>
+                            <input type="text" class="form-control:focus" value="{{this.name}}" style="text-align:center;"readonly >
+                            <input type="text" class="form-control:focus" value="{{this.email}}" style="text-align:center;" readonly>
+                        </ul>   
                     {{/each}}
-                </table>
+                </ul>
             </div>
             </form>
             <hr></hr>

@@ -69,6 +69,8 @@ router.post('/register', function(req, res){
 	req.checkBody('password', 'Password is required').notEmpty();
 	req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
 
+	console.log(email);
+
 	var errors = req.validationErrors();
 
 	if(errors){
@@ -77,17 +79,18 @@ router.post('/register', function(req, res){
 		});
 	} else {
 		User.getUserByUsername(username, function(err, user){
-			User.getEmail(email, function(err, email) {
+			User.getEmail(email, function(err, checkEmail) {
+				console.log("går inte igenom");
 				if(err) {
 					throw err;
 					
-				} else if(user && email) {
+				} else if(user && checkEmail) {
 					req.flash('error_msg', 'Username and email in use');
 					res.redirect('/');
 				} else if(user) {
 					req.flash('error_msg', 'Username in use');
 					res.redirect('/');
-				} else if(email){
+				} else if(checkEmail){
 					req.flash('error_msg', 'Email in use');
 					res.redirect('/');
 				} else {
@@ -106,7 +109,7 @@ router.post('/register', function(req, res){
 					req.flash('success_msg', 'You are registered and can now login');
 					res.redirect('/');				
 				}
-			});		
+			});
 		});
 	}
 });
@@ -175,7 +178,6 @@ router.post('/createBooking', function(req, res){
 	var startTime	= req.body.startTime;
 	var endTime		= req.body.endTime;
 
-
 	// Validation check
 	req.checkBody('datepicker', 'Date is required').notEmpty();
 	req.checkBody('startTime', 'Start time is required').notEmpty();
@@ -191,7 +193,7 @@ router.post('/createBooking', function(req, res){
 			date: date,
 			startTime: startTime,
 			endTime: endTime,
-			patient: "none"
+			patient: "Unbooked"
 		});
 
 		Booking.createBooking(newBooking, function(err, booking){
@@ -236,7 +238,7 @@ router.post('/showTable', function(req, res, next) {
       	});
 });
 router.post('/bookTime', function(req, res, next) {
-	Booking.find({'patient': "none"})
+	Booking.find({'patient': "Unbooked"})
     	.then(function(doc) {
         	res.render('patient', {bookings: doc});
       	});
@@ -252,7 +254,7 @@ router.post('/bookIt', function(req, res, next){
 
 router.post('/unbookIt', function(req, res, next){
 	 console.log(req.body.id);
-	Booking.update({'_id':req.body.id},{$set:{patient:'none', isBooked:'false'}}, function (err, result) {
+	Booking.update({'_id':req.body.id},{$set:{patient:'Unbooked', isBooked:'false'}}, function (err, result) {
   		if (err) return handleError(err);
 		   
 		res.redirect('/patient');
