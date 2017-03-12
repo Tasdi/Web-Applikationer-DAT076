@@ -46,4 +46,24 @@ describe('Routing tests', function(){
         .expect(200)
         .expect(/Register/, done);
     });
+
+    it('Login page should be found', function(done) {
+        request(app).post('/login')
+        .expect(302, done);
+    });
+
+    it('Patient page should be found', function(done) {
+        request(app).get('/patient')
+        .expect(302, done);
+    });
+
+    it('Admin page should be found', function(done) {
+        request(app).get('/admin')
+        .expect(302, done);
+    });
+
+    it('Should not work', function(done) {
+        request(app).get('/regist')
+        .expect(404, done);
+    });
 });
