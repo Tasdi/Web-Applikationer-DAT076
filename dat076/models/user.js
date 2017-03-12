@@ -1,18 +1,16 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcryptjs');
-
 var mongodbUri = 'mongodb://dat076_project:rucus1@ds157439.mlab.com:57439/database_clinic';
+
 mongoose.Promise = global.Promise;
 mongoose.createConnection(mongodbUri);
+
 var conn = mongoose.connection;
-
 conn.on('error', console.error.bind(console, 'connection error:'));
-
 conn.once('open', function () {console.log("Great success!")});
 
 //User Schema, attributes that gets stored 
 //in database if a user is successfully registered
-
 var UserSchema = mongoose.Schema({
 	username: {
 		type: String,
@@ -81,7 +79,9 @@ module.exports.getStatus = function(isAdmin, callback){
 //
 module.exports.comparePassword = function(candidatePassword, hash, callback){
 	bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
-    	if(err) throw err;
+    	if(err) {
+			throw err;
+		}
     	callback(null, isMatch);
 	});
 }

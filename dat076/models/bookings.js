@@ -1,12 +1,10 @@
 var mongoose = require('mongoose');
-
 var mongodbUri = 'mongodb://dat076_project:rucus1@ds157439.mlab.com:57439/database_clinic';
 
 mongoose.connect(mongodbUri);
+
 var conn = mongoose.connection;
-
 conn.on('error', console.error.bind(console, 'connection error:'));
-
 conn.once('open', function () {console.log("Booking connection successful")});
 
 // Booking schema
