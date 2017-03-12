@@ -76,7 +76,7 @@ module.exports.getStatus = function(isAdmin, callback){
 	User.findOne(query, callback);
 }
 
-//
+//Checks that the typed in passwords are the same
 module.exports.comparePassword = function(candidatePassword, hash, callback){
 	bcrypt.compare(candidatePassword, hash, function(err, isMatch) {
     	if(err) {

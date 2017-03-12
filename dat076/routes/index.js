@@ -71,6 +71,8 @@ router.post('/register', function(req, res){
 			errors:errors
 		});
 	} else {
+		/* Checks if a username or email already exist and prints out message depending on the case.
+		// We dont allow two users with same username or email or both. */
 		User.getUserByUsername(username, function(err, user){
 			User.getEmail(email, function(err, checkEmail) {
 				if(err) {

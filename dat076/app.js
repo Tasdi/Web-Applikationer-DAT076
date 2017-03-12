@@ -69,9 +69,10 @@ app.use(function (req, res, next) {
 
 app.use('/', routes);
 
-// Set Port
+// Set port
 app.set('port', (process.env.PORT || 3000));
 
+//Starts the server
 app.listen(app.get('port'), function(){
 	console.log('Server started on port '+app.get('port'));
 });

@@ -35,6 +35,7 @@ var BookingSchema = mongoose.Schema({
 
 var Booking = module.exports = mongoose.model('Booking', BookingSchema);
 
+//Creates a booking and stores in database
 module.exports.createBooking = function(newBooking, callback){
 	 newBooking.save(callback);
 }

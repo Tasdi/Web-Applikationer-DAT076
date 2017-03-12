@@ -9,30 +9,32 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
     <script>
-        $( function() {
+        $(function(){
         $( "#datepicker" ).datepicker();
-        } );
+        });
     </script>
     <script>
-        $( function() {
+        $(function(){
             $( "#startTime" ).timepicker();
-        } );
+        });
     </script>
     <script>
-        $( function() {
+        $(function(){
             $( "#endTime" ).timepicker();
-        } );
+        });
     </script>
 </head>
 
 <body>
-    <h1> Hello Dr. {{user.name}}</h1>
+    <h1>Hello Dr. {{user.name}}</h1>
     <hr></hr>
+
     {{#if errors}}
         {{#each errors}}
         <div class="alert alert-danger">{{msg}}</div>
         {{/each}}
     {{/if}}
+    
     <hr></hr>    
 
     <div>
@@ -101,7 +103,7 @@
         <button typpe="button" class="adminButton">Show all patients</button>
         <div id="patientInfo">
             <ul border="1" cellpadding="10" cellspacing="10" id="bookingTable">
-                {{# each patient }}
+                {{# each patient}}
                     <hr></hr>
                     <ul>
                         <input type="text" class="form-control:focus" value="{{this.name}}" style="text-align:center;"readonly >

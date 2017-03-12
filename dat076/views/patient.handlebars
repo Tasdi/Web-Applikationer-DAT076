@@ -3,7 +3,7 @@
 </head>
 
 <body>
-    <h1> Client side</h1>
+    <h1>Client side</h1>
     <hr></hr>
     {{#if errors}}
         {{#each errors}}
@@ -14,21 +14,20 @@
 
     <div>
         <form method="POST" action="/bookTime">
-            <button  class="adminButton">Book a time</button>
+            <button class="adminButton">Book a time</button>
         </form>
 
         <table border="5" cellpadding="10" cellspacing="10">
             {{# each bookings }}
                 <tr>
-                    <td> {{ this.date }}</td>
-                    <td> {{ this.startTime }} - {{ this.endTime }}</td>
+                    <td>{{ this.date }}</td>
+                    <td>{{ this.startTime }} - {{ this.endTime }}</td>
                     <td>
                         <form method="POST" action="/bookIt">
                             <input type="hidden" name="id" value={{this.id}}>
                             <input type="submit" value="book">
                         </form>
-                    </td>
-                    
+                    </td>              
                 </tr>
             {{/each}}
         </table>
@@ -37,9 +36,9 @@
 
     <div id="showing">
         <form method="post" action="/showTable">
-            <button typpe="button" class="adminButton">My Bookings</button>
+            <button class="adminButton">My Bookings</button>
         </form>
-            <table  border="5" cellpadding="10" cellspacing="10">
+            <table border="5" cellpadding="10" cellspacing="10">
                 {{# each items }}
                 <tr>
                     <td> {{ this.date }}</td>
