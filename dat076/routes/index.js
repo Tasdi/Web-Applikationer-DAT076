@@ -227,6 +227,14 @@ router.post('/updateTable', function(req, res, next){
 		});
 });
 
+router.post('/deleteBooking', function(req, res, next){
+	Booking.remove({'_id':req.body.id}, function(err,result){
+			if (err) return handleError(err);
+			req.flash('success_msg', 'deleted');
+			res.redirect('/admin');
+		});
+});
+
 
 router.post('/showTable', function(req, res, next) {
 	Booking.find({'patient': req.user.username})

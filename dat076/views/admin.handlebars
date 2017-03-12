@@ -52,6 +52,14 @@
                             <input type="hidden" name="id" value={{this.id}}>
                             <input type="submit" value="update">
                         </form>
+                         {{#if this.status}}
+                            
+                            {{else}}
+                            <form method="POST" action="/deleteBooking">
+                            <input type="hidden" name="id" value={{this.id}}>
+                            <input type="submit" value="delete">
+                            </form>
+                            {{/if}}
                     </ul>   
                 {{/each}}
             </ul>
