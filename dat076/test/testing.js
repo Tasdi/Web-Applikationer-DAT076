@@ -19,16 +19,12 @@ before(function(done) {
       done();
     }, 5000);
 
-    mockgoose.prepareStorage().then(function() {
-       /* mongoose.connect('mongodb://dat076_project:rucus1@ds157439.mlab.com:57439/database_clinic', function(err) {
-            console.log('Connection test passed');
-            done(err);
-        });*/
+   mockgoose.prepareStorage().then(function() {
         done();
     });
 });
 
-describe('test cases', function(){
+describe('Test cases', function(){
     it('Should be invalid if attributes of users are empty', function(done){
         var user = new User();
         user.validate(function(err){
@@ -49,6 +45,29 @@ describe('test cases', function(){
             expect(err.errors.patient).to.exist;
             done();
         });
+    });
+
+    it('Tests if bookings can be stored', function(done){
+        var booking = new Booking({
+            date: '03/08/2015'
+        });
+
+        assert(booking.isNew === true);
+        done();
+    });
+
+    it('Test to save a booking to the database', function(done){
+        var booking = new Booking({
+            date: '03/08/2015',
+            startTime: '10:00',
+            endTime: '11:00',
+            patient: 'Libaani',
+            isBooked: false
+        });
+
+        booking.save().then(function(){
+        });
+       done();
     });
 });
 

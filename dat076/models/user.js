@@ -7,7 +7,7 @@ mongoose.createConnection(mongodbUri);
 
 var conn = mongoose.connection;
 conn.on('error', console.error.bind(console, 'connection error:'));
-conn.once('open', function () {console.log("Great success!")});
+conn.once('open', function () {console.log("User connection successful")});
 
 //User Schema, attributes that gets stored 
 //in database if a user is successfully registered
