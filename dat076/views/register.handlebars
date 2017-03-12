@@ -1,34 +1,41 @@
 <head>
-        <title>{{title}}</title>
-    </head>
+  <title>{{title}}</title>
+</head>
 
-<h2 class="page-header">Register</h2>
-{{#if errors}}
-      {{#each errors}}
-        <div class="alert alert-danger">{{msg}}</div>
-      {{/each}}
-{{/if}}
-<form method="post" action="/register">
-   <div class="form-group">
-    <label>Name</label><br>
-    <input type="text" class="form-control:focus" placeholder="Name" name="name">
-  </div>
-  <div class="form-group">
-    <label>Username</label><br>
-    <input type="text" class="form-control:focus" placeholder="Username" name="username">
-  </div>
-   <div class="form-group">
-    <label>Email</label><br>
-    <input type="email" class="form-control:focus" placeholder="Email" name="email">
-  </div>
-  <div class="form-group">
-    <label>Password</label><br>
-    <input type="password" class="form-control:focus" placeholder="Password" name="password">
-  </div>
-  <div class="form-group">
-    <label>Confirm Password</label><br>
-    <input type="password" class="form-control:focus" placeholder="Password" name="password2">
-  </div>
-  <button type="submit" class="btn btn-default">Submit</button>
-  
-</form>
+<body>
+  <h2 class="page-header">Register</h2>
+  {{#if errors}}
+        {{#each errors}}
+          <div class="alert alert-danger">{{msg}}</div>
+        {{/each}}
+  {{/if}}
+  <form method="post" action="/register">
+    <div class="form-group">
+      <label>Name</label><br>
+      <input type="text" class="form-control:focus" placeholder="Name" name="name">
+    </div>
+
+    <div class="form-group">
+      <label>Username</label><br>
+      <input type="text" class="form-control:focus" placeholder="Username" name="username">
+    </div>
+
+    <div class="form-group">
+      <label>Email</label><br>
+      <input type="email" class="form-control:focus" placeholder="Email" name="email">
+    </div>
+
+    <div class="form-group">
+      <label>Password</label><br>
+      <input type="password" class="form-control:focus" placeholder="Password" name="password">
+    </div>
+
+    <div class="form-group">
+      <label>Confirm Password</label><br>
+      <input type="password" class="form-control:focus" placeholder="Password" name="password2">
+    </div>
+    
+    <button type="submit" class="btn btn-default">Submit</button>
+    
+  </form>
+</body>
