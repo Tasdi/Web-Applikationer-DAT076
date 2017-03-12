@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "author": "Liban Aden, Mehdi Adelzadeh, Tasdikul Huda",
   "license": "ISC",
@@ -19,6 +19,7 @@
     "express-messages": "*",
     "express-session": "*",
     "express-validator": "*",
+    "mocha": "^3.2.0",
     "mongodb": "*",
     "mongoose": "*",
     "passport": "*",
