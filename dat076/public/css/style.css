@@ -47,3 +47,7 @@ body {
   background:#370;
   color: #e3e3e3;
 }
+
+form{
+  display: inline;
+}
