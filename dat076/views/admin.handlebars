@@ -15,12 +15,20 @@
     </script>
     <script>
         $(function(){
-            $( "#startTime" ).timepicker({timeFormat:'HH:mm'});
+            $( "#startTime" ).timepicker({
+                timeFormat: 'HH:mm',
+                minTime: '08:00',
+                maxTime: '16:30'
+            });
         });
     </script>
     <script>
         $(function(){
-            $( "#endTime" ).timepicker({timeFormat:'HH:mm'});
+            $( "#endTime" ).timepicker({
+                timeFormat:'HH:mm',
+                minTime: '08:30',
+                maxTime: '17:00'
+            });
         });
     </script>
 </head>
