@@ -13,20 +13,25 @@ conn.once('open', function () {console.log("Booking connection successful")});
 var BookingSchema = mongoose.Schema({
 	date: {
 		type: String,
-		index:true
+		index:true,
+		required: true
 	},
 	startTime: {
-		type: String
+		type: String,
+		required: true
 	},
 	endTime: {
-		type: String
+		type: String,
+		required: true
 	},
 	patient: {
-		type: String
+		type: String,
+		required: true
 	},
 	isBooked: {
 		type: Boolean,
-		default: false
+		default: false,
+		required: true
 	}
 });
 
