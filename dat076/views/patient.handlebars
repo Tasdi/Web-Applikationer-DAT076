@@ -1,64 +1,58 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>{{title}}</title>
-    </head>
+<head>
+    <title>{{title}}</title>
+</head>
 
-    <body>
-        <h1> Client side</h1>
+<body>
+    <h1> Client side</h1>
+    <hr></hr>
+    {{#if errors}}
+        {{#each errors}}
+        <div class="alert alert-danger">{{msg}}</div>
+        {{/each}}
+    {{/if}}
+    <hr></hr>    
 
-        <hr></hr>
-        {{#if errors}}
-            {{#each errors}}
-            <div class="alert alert-danger">{{msg}}</div>
-            {{/each}}
-        {{/if}}
-        <hr></hr>    
+    <div>
+        <form method="POST" action="/bookTime">
+            <button  class="adminButton">Book a time</button>
+        </form>
 
-        <div>
-            <form method="POST" action="/bookTime">
-                        <button  class="adminButton">Book a time</button>
+        <table border="5" cellpadding="10" cellspacing="10">
+            {{# each bookings }}
+                <tr>
+                    <td> {{ this.date }}</td>
+                    <td> {{ this.startTime }} - {{ this.endTime }}</td>
+                    <td>
+                        <form method="POST" action="/bookIt">
+                            <input type="hidden" name="id" value={{this.id}}>
+                            <input type="submit" value="book">
                         </form>
+                    </td>
+                    
+                </tr>
+            {{/each}}
+        </table>
+        <hr></hr>
+    </div>
 
-                         <table border="5" cellpadding="10" cellspacing="10">
-                        {{# each bookings }}
-                        <tr>
-                            <td> {{ this.date }}</td>
-                            <td> {{ this.startTime }} - {{ this.endTime }}</td>
-                            <td>
-                             <form method="POST" action="/bookIt">
-                                 <input type="hidden" name="id" value={{this.id}}>
-                                 <input type="submit" value="book">
-                             </form>
-                            </td>
-                            
-                        </tr>
-                        {{/each}}
-                    </table>
-                    <hr></hr>
-        </div>
-        
-        <div id="showing">
-            <form method="post" action="/showTable">
+    <div id="showing">
+        <form method="post" action="/showTable">
             <button typpe="button" class="adminButton">My Bookings</button>
-            </form>
-                <table  border="5" cellpadding="10" cellspacing="10">
-                    {{# each items }}
-                    <tr>
-                        <td> {{ this.date }}</td>
-                        <td>{{ this.startTime }} - {{ this.endTime }}</td>
-                        <td>
-                            <form method="POST" action="/unbookIt">
-                                 <input type="hidden" name="id" value={{this.id}}>
-                                 <input type="submit" value="unbook">
-                             </form>
-                        </td>
-                    </tr>
-                    {{/each}}
-                </table>
-            </div>
-            <hr></hr>
-            
-            </div>
-    </body>
-</html>
+        </form>
+            <table  border="5" cellpadding="10" cellspacing="10">
+                {{# each items }}
+                <tr>
+                    <td> {{ this.date }}</td>
+                    <td>{{ this.startTime }} - {{ this.endTime }}</td>
+                    <td>
+                        <form method="POST" action="/unbookIt">
+                            <input type="hidden" name="id" value={{this.id}}>
+                            <input type="submit" value="unbook">
+                        </form>
+                    </td>
+                </tr>
+                {{/each}}
+            </table>
+    </div>
+    <hr></hr>  
+</body>

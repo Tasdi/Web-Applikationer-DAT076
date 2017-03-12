@@ -1,113 +1,111 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>{{title}}</title>
+<head>
+    <title>{{title}}</title>
 
-        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-        
-        <script src="../../dist/js/bootstrap.min.js"></script>
-        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
-        <script>
-            $( function() {
-            $( "#datepicker" ).datepicker();
-            } );
-        </script>
-        <script>
-            $( function() {
-                $( "#startTime" ).timepicker();
-            } );
-        </script>
-        <script>
-            $( function() {
-                $( "#endTime" ).timepicker();
-            } );
-        </script>
-    </head>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+    <script>
+        $( function() {
+        $( "#datepicker" ).datepicker();
+        } );
+    </script>
+    <script>
+        $( function() {
+            $( "#startTime" ).timepicker();
+        } );
+    </script>
+    <script>
+        $( function() {
+            $( "#endTime" ).timepicker();
+        } );
+    </script>
+</head>
 
-    <body>
-        <h1> Hello Dr. {{user.name}}</h1>
+<body>
+    <h1> Hello Dr. {{user.name}}</h1>
+    <hr></hr>
+    {{#if errors}}
+        {{#each errors}}
+        <div class="alert alert-danger">{{msg}}</div>
+        {{/each}}
+    {{/if}}
+    <hr></hr>    
+
+    <div>
+        <form method="post" action="/showBookings">
+        <button typpe="button" class="adminButton">Show bookings </button>
+        </form>
+        <div id="bookingInfo">
+            <ul  border="1" cellpadding="10" cellspacing="10" id="bookingTable">
+                {{# each booking }}
+                    <hr></hr>
+                    <ul>
+                        <form method="POST" action="/updateTable">
+                            <input type="text" class="form-control:focus" name="date" value="{{this.date}}" style="text-align:center;" >
+                            <input type="text" class="form-control:focus" name="startTime" value="{{this.startTime}}" style="text-align:center;">
+                            <input type="text" class="form-control:focus" name="endTime" value="{{this.endTime}}" style="text-align:center;">
+                            <input value={{ this.patient }} style="text-align:center;" readonly>
+                            <input type="hidden" name="id" value={{this.id}}>
+                            <input type="submit" value="update">
+                        </form>
+                    </ul>   
+                {{/each}}
+            </ul>
+        </div>
         <hr></hr>
-        {{#if errors}}
-            {{#each errors}}
-            <div class="alert alert-danger">{{msg}}</div>
-            {{/each}}
-        {{/if}}
-        <hr></hr>    
+    </div>
 
-        <div>
-            <form method="post" action="/showBookings">
-            <button typpe="button" class="adminButton">Show bookings </button>
-            </form>
-            <div id="bookingInfo">
-                <ul  border="1" cellpadding="10" cellspacing="10" id="bookingTable">
-                    {{# each booking }}
-                        <hr></hr>
-                        <ul>
-                            <form method="POST" action="/updateTable">
-                                <input type="text" class="form-control:focus" name="date" value="{{this.date}}" style="text-align:center;" >
-                                <input type="text" class="form-control:focus" name="startTime" value="{{this.startTime}}" style="text-align:center;">
-                                <input type="text" class="form-control:focus" name="endTime" value="{{this.endTime}}" style="text-align:center;">
-                                <input value={{ this.patient }} style="text-align:center;" readonly>
-                                <input type="hidden" name="id" value={{this.id}}>
-                                <input type="submit" value="update">
-                            </form>
-                        </ul>   
-                    {{/each}}
-                </ul>
-            </div>
-            <hr></hr>
-        </div>
+    <div>
+        <form method="post" action="/createBooking">
+            <input type="button" class="adminButton1" onclick="toggle()" id="testButton" value="Create a new booking"></input>
+            <div id="createSchema" style="display:none">
 
-        <div>
-            <form method="post" action="/createBooking">
-                <input type="button" class="adminButton1" onclick="toggle()" id="testButton" value="Create a new booking"></input>
-                <div id="createSchema" style="display:none">
-
-                    <div class="form-group">
-                        <label>Date</label><br>
-                        <input type="text" class="form-control:focus" placeholder="Date" name="datepicker" id="datepicker">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Start time</label><br>
-                        <input type="text" class="form-control:focus" placeholder="startTime" name="startTime" id="startTime">
-                    </div>
-
-                    <div class="form-group">
-                        <label>End time</label><br>
-                        <input type="text" class="form-control:focus" placeholder="endTime" name="endTime" id="endTime">
-                    </div>
-
-                    <p>
-                        <button type="submit" class="btn btn-default">Submit</button>
-                    </p>
-
+                <div class="form-group">
+                    <label>Date</label><br>
+                    <input type="text" class="form-control:focus" placeholder="Date" name="datepicker" id="datepicker">
                 </div>
-                <hr></hr>
-            </form>
-        </div>
 
-        <div>
-            <form method="post" action="/showPatients">
-            <button typpe="button" class="adminButton">Show all patients</button>
-            <div id="patientInfo">
-                <ul border="1" cellpadding="10" cellspacing="10" id="bookingTable">
-                    {{# each patient }}
-                        <hr></hr>
-                        <ul>
-                            <input type="text" class="form-control:focus" value="{{this.name}}" style="text-align:center;"readonly >
-                            <input type="text" class="form-control:focus" value="{{this.email}}" style="text-align:center;" readonly>
-                        </ul>   
-                    {{/each}}
-                </ul>
+                <div class="form-group">
+                    <label>Start time</label><br>
+                    <input type="text" class="form-control:focus" placeholder="startTime" name="startTime" id="startTime">
+                </div>
+
+                <div class="form-group">
+                    <label>End time</label><br>
+                    <input type="text" class="form-control:focus" placeholder="endTime" name="endTime" id="endTime">
+                </div>
+
+                <p>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </p>
+
             </div>
-            </form>
             <hr></hr>
+        </form>
+    </div>
+
+    <div>
+        <form method="post" action="/showPatients">
+        <button typpe="button" class="adminButton">Show all patients</button>
+        <div id="patientInfo">
+            <ul border="1" cellpadding="10" cellspacing="10" id="bookingTable">
+                {{# each patient }}
+                    <hr></hr>
+                    <ul>
+                        <input type="text" class="form-control:focus" value="{{this.name}}" style="text-align:center;"readonly >
+                        <input type="text" class="form-control:focus" value="{{this.email}}" style="text-align:center;" readonly>
+                    </ul>   
+                {{/each}}
+            </ul>
         </div>
-    </body>
+        </form>
+        <hr></hr>
+    </div>
+</body>
     
 <script>
 function toggle() { 
@@ -122,5 +120,3 @@ function toggle() {
     }
 }
 </script>
-
-</html>
