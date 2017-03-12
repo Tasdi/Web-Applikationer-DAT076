@@ -69,6 +69,42 @@ describe('Test cases', function(){
         });
        done();
     });
+
+    it('Tests if user can be stored', function(done){
+        var user = new User({
+            username: 'Tasdi'
+        });
+
+        assert(user.isNew === true);
+        done();
+    });
+    
+    it('Test to save a user to the database', function(done){
+        var user = new User({
+            username: 'FromTest',
+            password: 'bcrypt',
+            email: 'from@test.js',
+            name: 'Test a test that is tested',
+            isAdmin: false
+        });
+    
+        User.getUserByUsername(user.username, function(err, userName){
+            if(err) {
+                throw err;
+            }
+            if(!userName) {
+                console.log('saving user');
+                user.save().then(function(){
+                    assert(user.isNew === false);
+                });
+            } else{
+                console.log('User already in database');
+            }
+        });
+           
+       done();
+    });
+
 });
 
 describe('Routing tests', function(){
