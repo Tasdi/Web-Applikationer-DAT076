@@ -21,6 +21,7 @@ before(function(done) {
 
     mockgoose.prepareStorage().then(function() {
         mongoose.connect('mongodb://dat076_project:rucus1@ds157439.mlab.com:57439/database_clinic', function(err) {
+            console.log('Connection test passed');
             done(err);
         });
     });
@@ -28,7 +29,7 @@ before(function(done) {
 
 describe('test cases', function(){
     //Create test for user
-    it('should be invalid if attributes are empty', function(done){
+    it('Should be invalid if attributes of users are empty', function(done){
         var user = new User();
         user.validate(function(err){
             expect(err.errors.username).to.exist;
@@ -40,7 +41,7 @@ describe('test cases', function(){
     });
 
     //Create test for booking
-    it('another test', function(done){
+    it('Should be invalid if attributes of bookings are empty', function(done){
         var booking = new Booking();
         booking.validate(function(err){
             expect(err.errors.date).to.exist;
