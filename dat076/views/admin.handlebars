@@ -54,7 +54,7 @@
                             <input type="hidden" name="id" value={{this.id}}>
                             <input type="submit" value="update">
                         </form>
-                         {{#if this.status}}
+                         {{#if this.isBooked}}
                             
                             {{else}}
                             <form method="POST" action="/deleteBooking">

@@ -185,6 +185,9 @@ router.post('/createBooking', function(req, res){
 			errors:errors
 		});
 	} else {
+		var endtimes = endTime.split(':');
+		var result = parseFloat(endtimes[1]);
+		console.log(endtimes[1]);
 		var newBooking = new Booking({
 			date: date,
 			startTime: startTime,
