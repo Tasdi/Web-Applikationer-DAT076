@@ -16,24 +16,30 @@ conn.once('open', function () {console.log("Great success!")});
 var UserSchema = mongoose.Schema({
 	username: {
 		type: String,
-		index:true
+		index:true,
+		required: true
 	},
 	password: {
-		type: String
+		type: String,
+		required: true
 	},
 	email: {
-		type: String
+		type: String,
+		required: true
 	},
 	name: {
-		type: String
+		type: String,
+		required: true
 	},
 	isAdmin: {
 		type: Boolean,
-		default: false
+		default: false,
+		required: true
 	},
 	hasBooked: {
 		type: Boolean,
-		default: false
+		default: false,
+		required: true
 	}
 });
 
