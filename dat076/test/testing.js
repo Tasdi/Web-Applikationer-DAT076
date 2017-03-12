@@ -18,6 +18,7 @@ before(function(done) {
     setTimeout(function() {
       done();
     }, 5000);
+
     mockgoose.prepareStorage().then(function() {
         mongoose.connect('mongodb://dat076_project:rucus1@ds157439.mlab.com:57439/database_clinic', function(err) {
             done(err);
@@ -86,10 +87,3 @@ describe('Routing tests', function(){
         .expect(404, done);
     });
 });
-
-
-
-
-
-
-
