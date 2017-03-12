@@ -69,8 +69,6 @@ router.post('/register', function(req, res){
 	req.checkBody('password', 'Password is required').notEmpty();
 	req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
 
-	console.log(email);
-
 	var errors = req.validationErrors();
 
 	if(errors){
@@ -80,7 +78,6 @@ router.post('/register', function(req, res){
 	} else {
 		User.getUserByUsername(username, function(err, user){
 			User.getEmail(email, function(err, checkEmail) {
-				console.log("går inte igenom");
 				if(err) {
 					throw err;
 					

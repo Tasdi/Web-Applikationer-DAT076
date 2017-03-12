@@ -22,7 +22,6 @@
     "mongodb": "*",
     "mongoose": "*",
     "passport": "*",
-    "passport-http": "*",
     "passport-local": "*"
   }
 }
