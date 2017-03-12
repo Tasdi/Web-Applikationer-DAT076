@@ -25,6 +25,7 @@
     "mongoose": "*",
     "passport": "*",
     "passport-local": "*",
-    "sinon": "^1.17.7"
+    "sinon": "^1.17.7",
+    "supertest": "^3.0.0"
   }
 }
