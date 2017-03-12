@@ -1,10 +1,26 @@
 var mocha   = require('mocha');
 var assert  = require('assert');
 var expect  = require('chai').expect;
+var sinon = require('sinon');
+var routes = require('../routes/index');
 var User    = require('../models/user');
 var Booking = require('../models/bookings');
 var request = require('supertest');
 var app     = require('../app');
+var Mongoose = require('mongoose').Mongoose;
+var mongoose = new Mongoose();
+
+var Mockgoose = require('mockgoose').Mockgoose;
+var mockgoose = new Mockgoose(mongoose);
+
+before(function(done) {
+    mockgoose.prepareStorage().then(function() {
+        mongoose.connect('mongodb://dat076_project:rucus1@ds157439.mlab.com:57439/database_clinic', function(err) {
+            done(err);
+        });
+    });
+});
+
 
 describe('test cases', function(){
     //Create test for user
@@ -67,3 +83,10 @@ describe('Routing tests', function(){
         .expect(404, done);
     });
 });
+
+
+
+
+
+
+
