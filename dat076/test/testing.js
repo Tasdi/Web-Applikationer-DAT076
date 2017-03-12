@@ -1,10 +1,10 @@
-var mocha = require('mocha');
-var assert = require('assert');
-var expect = require('chai').expect;
-var User = require('../models/user');
+var mocha   = require('mocha');
+var assert  = require('assert');
+var expect  = require('chai').expect;
+var User    = require('../models/user');
 var Booking = require('../models/bookings');
 var request = require('supertest');
-var app = require('../app');
+var app     = require('../app');
 
 describe('test cases', function(){
     //Create test for user

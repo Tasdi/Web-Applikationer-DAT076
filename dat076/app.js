@@ -1,15 +1,14 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var exphbs = require('express-handlebars');
-var expressValidator = require('express-validator');
-var flash = require('connect-flash');
-var session = require('express-session');
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-
-var routes = require('./routes/index');
+var express           = require('express');
+var path              = require('path');
+var cookieParser      = require('cookie-parser');
+var bodyParser        = require('body-parser');
+var exphbs            = require('express-handlebars');
+var expressValidator  = require('express-validator');
+var flash             = require('connect-flash');
+var session           = require('express-session');
+var passport          = require('passport');
+var LocalStrategy     = require('passport-local').Strategy;
+var routes            = require('./routes/index');
 
 // Init App
 var app = express();
@@ -41,9 +40,9 @@ app.use(passport.session());
 // Express Validator
 app.use(expressValidator({
   errorFormatter: function(param, msg, value) {
-      var namespace = param.split('.')
-      , root    = namespace.shift()
-      , formParam = root;
+      var namespace   = param.split('.');
+      var root        = namespace.shift();
+      var formParam   = root;
 
     while(namespace.length) {
       formParam += '[' + namespace.shift() + ']';
