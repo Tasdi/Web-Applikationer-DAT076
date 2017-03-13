@@ -186,10 +186,7 @@ router.post('/createBooking', function(req, res){
 			errors:errors
 		});
 	} else {
-		var endtimes = endTime.split(':');
-		var starttimes = startTime.split(':');
-		var result = (parseFloat(endtimes[0]) + (parseFloat(endtimes[1]) /60)) - (parseFloat(starttimes[0]) + (parseFloat(starttimes[1]) /60));
-
+		var result = (parseFloat(endTime.split(':')[0])) + (parseFloat(endTime.split(':')[1]) /60) - (parseFloat(startTime.split(':')[0])) + (parseFloat(endTime.split(':')[0] /60));
 		endTime = startTime;
 
 		for(var i = 0; i < result*2; i++) {
