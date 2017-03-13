@@ -5,6 +5,8 @@ var sinon       = require('sinon');
 var User        = require('../models/user');
 
 describe('Test cases', function(){
+    var testUser;
+
     it('Should be invalid if attributes of users are empty', function(done){
         var user = new User();
         user.validate(function(err){
@@ -26,22 +28,22 @@ describe('Test cases', function(){
     });
     
     it('Test to save a user to the database', function(done){
-        var user = new User({
+        testUser = new User({
             username: 'FromTest',
             password: 'bcrypt',
             email: 'from@test.js',
-            name: 'Test a test that is tested',
+            name: 'InitialName',
             isAdmin: false
         });
     
-        User.getUserByUsername(user.username, function(err, userName){
+        User.getUserByUsername(testUser.username, function(err, userName){
             if(err) {
                 throw err;
             }
             if(!userName) {
                 console.log('saving user');
-                user.save().then(function(){
-                    assert(user.isNew === false);
+                testUser.save().then(function(){
+                    assert(testUser.isNew === false);
                 });
             } else{
                 console.log('User already in database');
@@ -56,6 +58,16 @@ describe('Test cases', function(){
             assert(result.name === 'Tasdi');
             done();
         });
+    });
+
+    it('Updates email of the created user in test', function(done){
+        User.findOneAndUpdate({email: 'from@test.js'}, {email: 'updated@test.js'}).then(function(){
+            User.findOne({_id: testUser._id}).then(function(result){
+                assert(result.name === 'updated@test.js');
+                
+            });
+        });
+        done();
     });
 
 });
