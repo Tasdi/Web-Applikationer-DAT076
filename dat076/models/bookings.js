@@ -37,22 +37,15 @@ var Booking = module.exports = mongoose.model('Booking', BookingSchema);
 
 //Creates a booking and stores in database
 module.exports.createBooking = function(newBooking, callback){
-	Booking.find({date: newBooking.date ,startTime: newBooking.startTime, endTime: newBooking.endTime}, function(err, booking) 
-	{
-		if (err)
-		{
+	Booking.find({date: newBooking.date ,startTime: newBooking.startTime, endTime: newBooking.endTime}, function(err, booking) {
+		if (err) {
 			return handleError(err);
 		}
 		else if(!booking.length){
 			newBooking.save(callback);
 		}
-		else
-		{
+		else {
 			console.log(booking);
 		}
-
-	});
-
-
-	 
+	}); 
 }
