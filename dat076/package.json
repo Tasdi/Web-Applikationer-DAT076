@@ -1,11 +1,15 @@
 {
+
   "name": "MedicalBookingSystem",
+
   "version": "1.0.0",
   "description": "medical booking system",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
+
     "test": "mocha"
+
   },
   "author": "Liban Aden, Mehdi Adelzadeh, Tasdikul Huda",
   "license": "ISC",

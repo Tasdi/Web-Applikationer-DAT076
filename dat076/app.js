@@ -10,6 +10,7 @@ var passport          = require('passport');
 var LocalStrategy     = require('passport-local').Strategy;
 var routes            = require('./routes/index');
 
+
 // Init App
 var app = express();
 
@@ -43,6 +44,7 @@ app.use(expressValidator({
       var namespace   = param.split('.');
       var root        = namespace.shift();
       var formParam   = root;
+
 
     while(namespace.length) {
       formParam += '[' + namespace.shift() + ']';
