@@ -173,7 +173,7 @@ router.post('/createBooking', function(req, res){
 	var date		= req.body.datepicker;
 	var startTime	= req.body.startTime;
 	var endTime		= req.body.endTime;
-	var i			= 0;
+//	var i			= 0;
 	var bookings = {};
 	// Validation check
 	req.checkBody('datepicker', 'Date is required').notEmpty();
@@ -189,28 +189,27 @@ router.post('/createBooking', function(req, res){
 		var endtimes = endTime.split(':');
 		var starttimes = startTime.split(':');
 		var result = (parseFloat(endtimes[0]) + (parseFloat(endtimes[1]) /60)) - (parseFloat(starttimes[0]) + (parseFloat(starttimes[1]) /60));
+
 		endTime = startTime;
-		while(i < result*2){
-		if (endTime.includes("30"))
-		{
-			endTime = endTime.replace("30", "00");
-			if (parseInt(endTime) != 9){
-			endTime = endTime.replace(parseInt(endTime), parseInt(endTime) + 1);
-		}
-		else{
-			endTime = '10:00';
-		}
-		}
-		else{
-			endTime= endTime.replace('00', '30');
-		}
-		
+
+		for(var i = 0; i < result*2; i++) {
+
+			if (endTime.includes("30")){
+				endTime = endTime.replace("30", "00");
+				if (parseInt(endTime) != 9){
+					endTime = endTime.replace(parseInt(endTime), parseInt(endTime) + 1);
+				} else {
+					endTime = '10:00';
+				}
+			} else {
+				endTime= endTime.replace('00', '30');
+			}
 			
 			bookings[i] = new Booking({
-			date: date,
-			startTime: startTime,
-			endTime: endTime,
-			patient: "Unbooked"
+				date: date,
+				startTime: startTime,
+				endTime: endTime,
+				patient: "Unbooked"
 			});
 			
 			Booking.createBooking(bookings[i], function(err, booking){
@@ -219,10 +218,8 @@ router.post('/createBooking', function(req, res){
 				}
 			});
 
-		
-		startTime = endTime;
-		i++;
-	};
+			startTime = endTime;
+		}
 
 		req.flash('success_msg', 'Your bookings has been uploaded');
 		res.redirect('/admin');
