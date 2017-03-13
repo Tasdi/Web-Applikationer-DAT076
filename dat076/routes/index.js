@@ -163,7 +163,7 @@ router.post('/login', function(req, res, next) {
 });
 
 router.post('/showBookings', function(req, res){
-	Booking.find({})
+	Booking.find({}).sort({startTime: 1})
     .then(function(doc) {
         res.render('admin', {booking: doc});
     });
@@ -173,7 +173,8 @@ router.post('/createBooking', function(req, res){
 	var date		= req.body.datepicker;
 	var startTime	= req.body.startTime;
 	var endTime		= req.body.endTime;
-
+	var i			= 0;
+	var bookings = {};
 	// Validation check
 	req.checkBody('datepicker', 'Date is required').notEmpty();
 	req.checkBody('startTime', 'Start time is required').notEmpty();
@@ -186,22 +187,44 @@ router.post('/createBooking', function(req, res){
 		});
 	} else {
 		var endtimes = endTime.split(':');
-		var result = parseFloat(endtimes[1]);
-		console.log(endtimes[1]);
-		var newBooking = new Booking({
+		var starttimes = startTime.split(':');
+		var result = (parseFloat(endtimes[0]) + (parseFloat(endtimes[1]) /60)) - (parseFloat(starttimes[0]) + (parseFloat(starttimes[1]) /60));
+		endTime = startTime;
+		while(i < result*2){
+		if (endTime.includes("30"))
+		{
+			endTime = endTime.replace("30", "00");
+			if (parseInt(endTime) != 9){
+			endTime = endTime.replace(parseInt(endTime), parseInt(endTime) + 1);
+		}
+		else{
+			endTime = '10:00';
+		}
+		}
+		else{
+			endTime= endTime.replace('00', '30');
+		}
+		
+			
+			bookings[i] = new Booking({
 			date: date,
 			startTime: startTime,
 			endTime: endTime,
 			patient: "Unbooked"
-		});
+			});
+			
+			Booking.createBooking(bookings[i], function(err, booking){
+				if(err) {
+					throw err;
+				}
+			});
 
-		Booking.createBooking(newBooking, function(err, booking){
-			if(err) {
-				throw err;
-			}
-		});
+		
+		startTime = endTime;
+		i++;
+	};
 
-		req.flash('success_msg', 'Your booking has been uploaded');
+		req.flash('success_msg', 'Your bookings has been uploaded');
 		res.redirect('/admin');
 	}
 });
@@ -249,7 +272,7 @@ router.post('/showTable', function(req, res, next) {
 });
 
 router.post('/bookTime', function(req, res, next) {
-	Booking.find({'patient': "Unbooked"})
+	Booking.find({'patient': "Unbooked"}).sort({startTime: 1})
     .then(function(doc) {
         res.render('patient', {bookings: doc});
     });
