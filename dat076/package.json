@@ -1,17 +1,22 @@
 {
-  "name": "Dat076",
+
+  "name": "MedicalBookingSystem",
+
   "version": "1.0.0",
   "description": "medical booking system",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+
+    "test": "mocha"
+
   },
   "author": "Liban Aden, Mehdi Adelzadeh, Tasdikul Huda",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "*",
     "body-parser": "*",
+    "chai": "^3.5.0",
     "connect-flash": "*",
     "cookie-parser": "^1.4.1",
     "express": "*",
@@ -19,10 +24,12 @@
     "express-messages": "*",
     "express-session": "*",
     "express-validator": "*",
+    "mocha": "^3.2.0",
+    "mockgoose": "^7.0.6",
     "mongodb": "*",
     "mongoose": "*",
     "passport": "*",
-    "passport-http": "*",
-    "passport-local": "*"
+    "passport-local": "*",
+    "supertest": "^3.0.0"
   }
 }

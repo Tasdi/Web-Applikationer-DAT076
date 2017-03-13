@@ -1,0 +1,61 @@
+<!--This handlebar sets up the view for patient page. DOCTYPE HTML is not necessary because every handlebar in this
+    project uses layout.handlebar as default.   -->
+<head>
+    <title>{{title}}</title>
+</head>
+
+<body>
+    <h1>Client side</h1>
+    <hr></hr>
+    {{#if errors}}
+        {{#each errors}}
+        <div class="alert alert-danger">{{msg}}</div>
+        {{/each}}
+    {{/if}}
+    <hr></hr>    
+
+    <!--Appearance of 'Book a time' is built up in this following division-->
+    <div>
+        <form method="POST" action="/showTime">
+            <button class="adminButton">Book a time</button>
+        </form>
+
+        <table border="5" cellpadding="10" cellspacing="10">
+            {{# each bookings }}
+                <tr>
+                    <td>{{ this.date }}</td>
+                    <td>{{ this.startTime }} - {{ this.endTime }}</td>
+                    <td>
+                        <form method="POST" action="/bookTime">
+                            <input type="hidden" name="id" value={{this.id}}>
+                            <input type="submit" value="book">
+                        </form>
+                    </td>              
+                </tr>
+            {{/each}}
+        </table>
+        <hr></hr>
+    </div>
+
+    <!--Appearance of 'My bookings' is built up in this following division-->
+    <div id="showing">
+        <form method="post" action="/showTable">
+            <button class="adminButton">My Bookings</button>
+        </form>
+            <table border="5" cellpadding="10" cellspacing="10">
+                {{# each items }}
+                <tr>
+                    <td> {{ this.date }}</td>
+                    <td>{{ this.startTime }} - {{ this.endTime }}</td>
+                    <td>
+                        <form method="POST" action="/unbookIt">
+                            <input type="hidden" name="id" value={{this.id}}>
+                            <input type="submit" value="unbook">
+                        </form>
+                    </td>
+                </tr>
+                {{/each}}
+            </table>
+    </div>
+    <hr></hr>  
+</body>

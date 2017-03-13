@@ -1,0 +1,137 @@
+<!--This handlebar sets up the view for admin page. DOCTYPE HTML is not necessary because every handlebar in this
+    project uses layout.handlebar as default.   -->
+
+<head>
+    <title>{{title}}</title>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+
+    <!-- Following scripts are used to create a booking more easily -->
+    <script>
+        $(function(){
+            $( "#datepicker" ).datepicker();
+        });
+    </script>
+    <script>
+        $(function(){
+            $( "#startTime" ).timepicker({
+                timeFormat: 'HH:mm',
+                minTime: '08:00',
+                maxTime: '16:30'
+            });
+        });
+    </script>
+    <script>
+        $(function(){
+            $( "#endTime" ).timepicker({
+                timeFormat:'HH:mm',
+                minTime: '08:30',
+                maxTime: '17:00'
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <h1>Hello Dr. {{user.name}}</h1>
+    <hr></hr>
+
+    {{#if errors}}
+        {{#each errors}}
+        <div class="alert alert-danger">{{msg}}</div>
+        {{/each}}
+    {{/if}}
+    
+    <hr></hr>    
+
+    <!--Appearance of 'Show and edit bookings' is built up in this following division-->
+    <div>
+        <form method="post" action="/showBookings">
+        <button typpe="button" class="adminButton">Show and edit bookings </button>
+        </form>
+        <div id="bookingInfo">
+            <ul  border="1" cellpadding="10" cellspacing="10" id="bookingTable">
+                {{# each booking }}
+                    <hr></hr>
+                    <ul>
+                        <form method="POST" action="/updateTable">
+                            <input type="text" class="form-control:focus" name="date" value="{{this.date}}" style="text-align:center;" >
+                            <input type="text" class="form-control:focus" name="startTime" value="{{this.startTime}}" style="text-align:center;">
+                            <input type="text" class="form-control:focus" name="endTime" value="{{this.endTime}}" style="text-align:center;">
+                            <input value={{ this.patient }} style="text-align:center;" readonly>
+                            <input type="hidden" name="id" value={{this.id}}>
+                            <input type="submit" value="update">
+                        </form>
+
+                        <!--If statement is used since we dont allow a admin to delete a date/time
+                        <<  that is already booked by a patient. -->
+                         {{#if this.isBooked}} 
+                         {{else}}
+                            <form method="POST" action="/deleteBooking">
+                                <input type="hidden" name="id" value={{this.id}}>
+                                <input type="submit" value="delete">
+                            </form>
+                        {{/if}}
+                    </ul>   
+                {{/each}}
+            </ul>
+        </div>
+        <hr></hr>
+    </div>
+
+    <!--Appearance of 'Create booking' is built up in this following division-->
+    <div>
+        <form method="post" action="/createBooking">
+            <!-- Toggle function used here can be found on /public/scripts.js -->
+            <input type="button" class="adminButton1" onclick="toggle()" id="testButton" value="Create a new booking"></input>
+            <div id="createSchema" style="display:none">
+
+                <div class="form-group">
+                    <label>Date</label><br>
+                    <input type="text" class="form-control:focus" placeholder="Date" name="datepicker" id="datepicker">
+                </div>
+
+                <div class="form-group">
+                    <label>Start time</label><br>
+                    <input type="text" class="form-control:focus" placeholder="startTime" name="startTime" id="startTime">
+                </div>
+
+                <div class="form-group">
+                    <label>End time</label><br>
+                    <input type="text" class="form-control:focus" placeholder="endTime" name="endTime" id="endTime">
+                </div>
+
+                <p>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </p>
+
+            </div>
+            <hr></hr>
+        </form>
+    </div>
+
+    <!--Appearance of 'Show all patient' is built up in this following division-->
+    <div>
+        <form method="post" action="/showPatients">
+        <button typpe="button" class="adminButton">Show all patients</button>
+        <div id="patientInfo">
+            <ul border="1" cellpadding="10" cellspacing="10" id="bookingTable">
+                {{# each patient}}
+                    <hr></hr>
+                    <ul>
+                        <input type="text" class="form-control:focus" value="{{this.name}}" style="text-align:center;"readonly >
+                        <input type="text" class="form-control:focus" value="{{this.email}}" style="text-align:center;" readonly>
+                    </ul>   
+                {{/each}}
+            </ul>
+        </div>
+        </form>
+        <hr></hr>
+    </div>
+</body>
