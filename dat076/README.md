@@ -7,12 +7,14 @@ Medical booking system
 Liban Aden, Mehdi Adelzadeh, Tasdikul Huda
 
 #Install
-npm install__
-npm install -g nodemon__
+npm install
+
+npm install -g nodemon
 
 #Run:
-nodemon__
-visit localhost: 3000__
+nodemon
+
+visit localhost: 3000
 
 #To run the tests
 mocha or npm run test
