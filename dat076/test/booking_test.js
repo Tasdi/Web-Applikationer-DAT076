@@ -1,7 +1,6 @@
 var mocha       = require('mocha');
 var assert      = require('assert');
 var expect      = require('chai').expect;
-var sinon       = require('sinon');
 var Booking     = require('../models/bookings');
 
 describe('Test cases', function(){
@@ -58,5 +57,4 @@ describe('Test cases', function(){
         });
         done();
     });
-
 });

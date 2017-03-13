@@ -1,7 +1,6 @@
 var mocha       = require('mocha');
 var assert      = require('assert');
 var expect      = require('chai').expect;
-var sinon       = require('sinon');
 var User        = require('../models/user');
 
 describe('Test cases', function(){

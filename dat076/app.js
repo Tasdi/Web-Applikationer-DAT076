@@ -78,7 +78,7 @@ app.listen(app.get('port'), function(){
 });
 
 // Exception handling. The code in if/else statement below
-// has been taken from Worksop 'W21', file app.js
+// has been taken from Workshop 'W21', file app.js.
 if (app.get('env') === 'development') {
     console.log("In development mode");
     app.use(function(err, req, res, next) {
