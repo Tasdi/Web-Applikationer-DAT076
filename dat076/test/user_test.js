@@ -45,7 +45,7 @@ describe('Test cases', function(){
                 testUser.save().then(function(){
                     assert(testUser.isNew === false);
                 });
-            } else{
+            } else {
                 console.log('User already in database');
             }
         });
