@@ -77,4 +77,26 @@ app.listen(app.get('port'), function(){
 	console.log('Server started on port '+app.get('port'));
 });
 
+// Exception handling. The code in if/else statement below
+// has been taken from Worksop 'W21', file app.js
+if (app.get('env') === 'development') {
+    console.log("In development mode");
+    app.use(function(err, req, res, next) {
+        console.log("Error:" + err.stack);
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: err
+        });
+    });
+} else {
+    app.use(function(err, req, res, next) {
+        res.status(err.status || 500);
+        res.render('error', {
+            message: err.message,
+            error: {}
+        });
+    });
+}
+
 module.exports = app;
