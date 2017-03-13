@@ -1,18 +1,18 @@
 #Web-Applikationer-DAT076
  
-#Name of project:
+#Name of project
 Medical booking system
 
-# Medlemmar:
+# Medlemmar
 Liban Aden, Mehdi Adelzadeh, Tasdikul Huda
 
 #Install
-npm install
-npm install -g nodemon
+npm install__
+npm install -g nodemon__
 
 #Run:
-nodemon
-visit localhost: 3000
+nodemon__
+visit localhost: 3000__
 
 #To run the tests
 mocha or npm run test
