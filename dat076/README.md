@@ -1,10 +1,32 @@
-An application for Medical Bookings.
+#Web-Applikationer-DAT076
+ 
+#Name of project:
+Medical booking system
 
-$$$Install
-  $npm install -g nodemon
+# Medlemmar:
+Liban Aden, Mehdi Adelzadeh, Tasdikul Huda
 
-Run:
-  $ nodemon
+#Install
+npm install
+npm install -g nodemon
 
-  Visit localhost:3000
+#Run:
+nodemon
+visit localhost: 3000
+
+#To run the tests
+mocha or npm run test
+
+#Description
+The 'models' folder includes code for creating User and Booking and connecting it to MongoDB.
+
+The 'public' folder includes bootstrap and css files.
+
+The 'routes' folder includes 'index.js' which holds the code for routing and controlling actions in the application.
+
+The 'test' folder includes four files for different kind of tests.
+
+
+
+
 
