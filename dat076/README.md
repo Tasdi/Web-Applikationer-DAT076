@@ -3,7 +3,7 @@
 #Name of project
 Medical booking system
 
-# Medlemmar
+# Members
 Liban Aden, Mehdi Adelzadeh, Tasdikul Huda
 
 #Install
@@ -28,7 +28,4 @@ The 'routes' folder includes 'index.js' which holds the code for routing and con
 
 The 'test' folder includes four files for different kind of tests.
 
-
-
-
-
+The 'views' folder includes handlebars files that determines the appearance of the application.

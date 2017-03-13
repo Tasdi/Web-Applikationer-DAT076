@@ -88,6 +88,7 @@
     <!--Appearance of 'Create booking' is built up in this following division-->
     <div>
         <form method="post" action="/createBooking">
+            <!-- Toggle function used here can be found on public/scripts.js -->
             <input type="button" class="adminButton1" onclick="toggle()" id="testButton" value="Create a new booking"></input>
             <div id="createSchema" style="display:none">
 
@@ -134,19 +135,3 @@
         <hr></hr>
     </div>
 </body>
-
-<!--This script allows 'Create a new booking' to toggle and changes text of the
-    of the button depending on the state -->    
-<script>
-function toggle() { 
-    var toggle = document.getElementById('createSchema');
-    var button1 =document.getElementById('testButton');
-    if (toggle.style.display == 'none') {
-        button1.value = "Hide bookings";
-        toggle.style.display = 'block'; 
-    } else {
-        button1.value = "Create a new booking";
-        toggle.style.display = 'none';    
-    }
-}
-</script>
