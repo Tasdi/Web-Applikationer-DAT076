@@ -54,18 +54,19 @@ module.exports.createUser = function(newUser, callback){
 	});
 }
 
-//Queries the databse to find name of a user
+//Queries the databse to find a user by username
 module.exports.getUserByUsername = function(username, callback){
 	var query = {username: username};
 	User.findOne(query, callback);
 }
 
+//Queries the databse to find user by email
 module.exports.getEmail = function(email, callback){
 	var query = {email: email};
 	User.findOne(query, callback);
 }
 
-//Queries the databse to get ID of a user
+//Queries the databse to find a user by ID.
 module.exports.getUserById = function(id, callback){
 	User.findById(id, callback);
 }

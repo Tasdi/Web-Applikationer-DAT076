@@ -11,19 +11,23 @@ router.get('/', function(req, res){
 	res.render('index', {title: 'MedicalClinic'});
 });
 
-/* Renders the page for a patient, uses an authenticated method so that a
-patient cannot route to the page of admin */
+/************************************************************************ 
+** Renders the page for a patient, uses an authenticated method so that a
+** patient cannot route to the page of admin
+*************************************************************************/
 router.get('/patient', ensureAuthenticateClient , function(req, res){
 	res.render('patient', {title: req.user.name});
 });
 
-/* Renders the page for an admin, uses an authenticated method so that a
-admin cannot route to the page of a patient */
+/************************************************************************ 
+** Renders the page for an admin, uses an authenticated method so that a
+** admin cannot route to the page of a patient
+*************************************************************************/
 router.get('/admin', ensureAuthenticateAdmin, function(req, res){
 	res.render('admin', {title: req.user.name});
 });
 
-/*Ensures that admin cannot route to homepage of a client */
+/*Ensures that admin cannot route to page of a client */
 function ensureAuthenticateAdmin(req, res, next) {
 	if(req.isAuthenticated() && req.user.isAdmin){
 			return next();
@@ -32,7 +36,7 @@ function ensureAuthenticateAdmin(req, res, next) {
 	res.redirect('/');	
 }
 
-/*Ensures that patient cannot route to homepage of an admin */
+/*Ensures that patient cannot route to page of an admin */
 function ensureAuthenticateClient(req, res, next) {
 	if(req.isAuthenticated() && (!req.user.isAdmin)){
 			return next();
@@ -46,9 +50,11 @@ router.get('/register', function(req, res) {
 	res.render('register', {title: 'Register'});
 });
 
-/* Post method to register a user. Uses validation check to see if all required fields are filled.
-//Checks whether user already exist in the databse i.e. registered, if the password typed in for a user
-//is correct, etc. */
+/***************************************************************************************************** 
+** Post method to register a user. Uses validation is used to check to see if all required fields are
+** filled. Checks whether user already exist in the databse i.e. registered, if the password typed
+** in for a user is correct, etc.
+******************************************************************************************************/
 router.post('/register', function(req, res){
 	var name		= req.body.name;
 	var email		= req.body.email;
@@ -56,7 +62,7 @@ router.post('/register', function(req, res){
 	var password	= req.body.password;
 	var password2	= req.body.password2;
 
-	// Validation check
+	// Checks for validation
 	req.checkBody('name', 'Name is required').notEmpty();
 	req.checkBody('email', 'Email is required').notEmpty();
 	req.checkBody('email', 'Email is not valid').isEmail();
@@ -71,8 +77,10 @@ router.post('/register', function(req, res){
 			errors:errors
 		});
 	} else {
-		/* Checks if a username or email already exist and prints out message depending on the case.
-		// We dont allow two users with same username or email or both. */
+		
+		 /* Checks if a username or email already exist and prints out message depending on the case.
+		 	We dont allow two users with same username or email or both. */
+		 
 		User.getUserByUsername(username, function(err, user){
 			User.getEmail(email, function(err, checkEmail) {
 				if(err) {
@@ -108,6 +116,9 @@ router.post('/register', function(req, res){
 	}
 });
 
+/*************************************************************
+** Localstrategy is used to authenticate user when logging in
+*************************************************************/
 passport.use(new LocalStrategy(
 	function(username, password, done) {
    		User.getUserByUsername(username, function(err, user){
@@ -129,16 +140,29 @@ passport.use(new LocalStrategy(
    		});
 }));
 
+/*******************************************************************************
+** Seralize is used to decide what data of a certain user that should be stored
+** in the session.
+*******************************************************************************/
 passport.serializeUser(function(user, done) {
   done(null, user.id);
 });
 
+/****************************************************************************
+** Deserialize enables loading additional user information on every request.
+****************************************************************************/
 passport.deserializeUser(function(id, done) {
   User.getUserById(id, function(err, user) {
     done(err, user);
   });
 });
 
+/**********************************************************************
+** When a user tries to log in, LocalStrategy is used to determine
+** if a user exists. If it doe and username and password is correct
+** then the user is redirected to the log-in page. A user is redirected
+** to the registration page otherwise.
+***********************************************************************/
 router.post('/login', function(req, res, next) {
   passport.authenticate('local', function(err, user, info) {
   	if (err) { 
@@ -162,6 +186,11 @@ router.post('/login', function(req, res, next) {
   })(req, res, next);
 });
 
+/******************************************************************
+** Queries the database for all bookings, sorts in descending order
+** and shows the bookings when 'Show and edit bookings' button is
+** pressed by an admin.
+******************************************************************/
 router.post('/showBookings', function(req, res){
 	Booking.find({}).sort({startTime: 1})
     .then(function(doc) {
@@ -169,12 +198,20 @@ router.post('/showBookings', function(req, res){
     });
 });
 
+/*****************************************************************
+** Uses validation to ensure that necessary fields for creating
+** a booking is not empty. If an admin chooses to create a booking
+** between 8:00 - 09:00 then 2 bookings are created where duration
+** of each booking is 30 minutes. This POST method does also checks
+** that a newly created booking does not already exist,
+** hence no duplicate bookings are stored.
+******************************************************************/
 router.post('/createBooking', function(req, res){
 	var date		= req.body.datepicker;
 	var startTime	= req.body.startTime;
 	var endTime		= req.body.endTime;
-//	var i			= 0;
-	var bookings = {};
+	var bookings 	= {};
+
 	// Validation check
 	req.checkBody('datepicker', 'Date is required').notEmpty();
 	req.checkBody('startTime', 'Start time is required').notEmpty();
@@ -188,9 +225,8 @@ router.post('/createBooking', function(req, res){
 	} else {
 		var result = (parseFloat(endTime.split(':')[0])) + (parseFloat(endTime.split(':')[1]) /60) - (parseFloat(startTime.split(':')[0])) + (parseFloat(endTime.split(':')[0] /60));
 		endTime = startTime;
-
+		
 		for(var i = 0; i < result*2; i++) {
-
 			if (endTime.includes("30")){
 				endTime = endTime.replace("30", "00");
 				if (parseInt(endTime) != 9){
@@ -223,18 +259,30 @@ router.post('/createBooking', function(req, res){
 	}
 });
 
+/*******************************************
+** Queries the database to find and show all
+** patients except the admin itself.
+*******************************************/
 router.post('/showPatients', function(req,res){
 	User.find({'isAdmin': false}).then(function(doc) {
         res.render('admin', {patient: doc});
 	});
 });
 
+/***************************************
+** A user is redirected to the homepage
+** when pressing the 'Logout' button.
+****************************************/
 router.get('/logout', function(req, res){
 	req.logOut();
 	req.flash('success_msg','You have been logged out');
 	res.redirect('/');
 });
 
+/***************************************
+** Updates an existing booking with the 
+** values specified by the admin.
+****************************************/
 router.post('/updateTable', function(req, res, next){
 	Booking.update({'_id':req.body.id}, {$set:{
 		date:req.body.date,
@@ -248,6 +296,10 @@ router.post('/updateTable', function(req, res, next){
 		});
 });
 
+/***************************************
+** An admin can delete a booking if it
+** not booked by any patients.
+****************************************/
 router.post('/deleteBooking', function(req, res, next){
 	Booking.remove({'_id':req.body.id}, function(err,result){
 		if (err) {
@@ -258,6 +310,10 @@ router.post('/deleteBooking', function(req, res, next){
 	});
 });
 
+/***************************************
+** Queries the database to show the
+** time (if any) booked by a patient.
+****************************************/
 router.post('/showTable', function(req, res, next) {
 	Booking.find({'patient': req.user.username})
     .then(function(doc) {
@@ -265,14 +321,23 @@ router.post('/showTable', function(req, res, next) {
     });
 });
 
-router.post('/bookTime', function(req, res, next) {
+/***************************************
+** Shows all available time that
+** a patient is allowed to book
+****************************************/
+router.post('/showTime', function(req, res, next) {
 	Booking.find({'patient': "Unbooked"}).sort({startTime: 1})
     .then(function(doc) {
         res.render('patient', {bookings: doc});
     });
 });
 
-router.post('/bookIt', function(req, res, next){
+/***************************************
+** Allows a patient to book a time. A
+** patient can be booked to at most
+** on booking at time.
+****************************************/
+router.post('/bookTime', function(req, res, next){
 	if(!req.user.hasBooked){
 		Booking.update({'_id':req.body.id},{$set:{patient:req.user.username, isBooked:'true'}}, function (err, result) {	
 			if (err) {
@@ -291,6 +356,11 @@ router.post('/bookIt', function(req, res, next){
 	}
 });
 
+/***************************************
+** Allows a patient to unbook a time.
+** The unbooked time is then available 
+** for booking to other users.
+****************************************/
 router.post('/unbookIt', function(req, res, next){
 	Booking.update({'_id':req.body.id},{$set:{patient:'Unbooked', isBooked:'false'}}, function (err, result) {
   		if (err) {

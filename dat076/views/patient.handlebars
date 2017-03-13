@@ -16,7 +16,7 @@
 
     <!--Appearance of 'Book a time' is built up in this following division-->
     <div>
-        <form method="POST" action="/bookTime">
+        <form method="POST" action="/showTime">
             <button class="adminButton">Book a time</button>
         </form>
 
@@ -26,7 +26,7 @@
                     <td>{{ this.date }}</td>
                     <td>{{ this.startTime }} - {{ this.endTime }}</td>
                     <td>
-                        <form method="POST" action="/bookIt">
+                        <form method="POST" action="/bookTime">
                             <input type="hidden" name="id" value={{this.id}}>
                             <input type="submit" value="book">
                         </form>
